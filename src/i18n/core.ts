@@ -16,7 +16,7 @@ export function readLanguage(storage: Pick<Storage, 'getItem'>): Language {
 export function saveLanguage(storage: Pick<Storage, 'setItem'>, language: Language) {
   try { storage.setItem(LANGUAGE_KEY, language); } catch { /* Language still switches without storage. */ }
 }
-export function moveName(language: Language, move: MoveId): string { return MOVES[move].kind === 'attack' ? MOVES[move].name : translate(language, MOVES[move].name); }
+export function moveName(language: Language, move: MoveId): string { return MOVES[move].kind === 'attack' && move !== 'ching' ? MOVES[move].name : translate(language, MOVES[move].name); }
 export function roundMessage(language: Language, round: Round): string {
   const t = (key: string, params?: Params) => translate(language, key, params);
   const p = MOVES[round.playerMove], a = MOVES[round.aiMove];

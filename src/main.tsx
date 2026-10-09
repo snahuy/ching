@@ -1,3 +1,6 @@
+import { MusicProvider } from './MusicContext';
+import { HomeScreen, ChingWordmark } from './HomeScreen';
+
 import { SettingsPage, GearIcon } from './SettingsPage';
 import { AppPreferencesProvider, useAppPreferences } from './AppPreferencesContext';
 import { pauseMoveDeadline, resumeMoveDeadline } from './appPreferences';
@@ -25,22 +28,21 @@ import { Character } from './Character';
 import { characterState, ROUND_TIMING } from './characterState';
 import { Multiplayer } from './multiplayer/Multiplayer';
 import { DEFAULT_PROFILE, avatarById, readProfile, saveProfile, type AvatarProfile } from './avatars';
-import '@fontsource/dm-sans/latin-400.css';
-import '@fontsource/dm-sans/latin-500.css';
-import '@fontsource/dm-sans/latin-600.css';
-import '@fontsource/dm-sans/latin-700.css';
-import '@fontsource/space-grotesk/latin-400.css';
-import '@fontsource/space-grotesk/latin-500.css';
-import '@fontsource/space-grotesk/latin-600.css';
-import '@fontsource/space-grotesk/latin-700.css';
-import '@fontsource/noto-sans-khmer/400.css';
-import '@fontsource/noto-sans-khmer/600.css';
-import '@fontsource/noto-sans-khmer/700.css';
+import '@fontsource/source-sans-3/latin-400.css';
+import '@fontsource/source-sans-3/latin-600.css';
+import '@fontsource/source-sans-3/latin-700.css';
+import '@fontsource/source-sans-3/latin-900.css';
+import '@fontsource/battambang/khmer-400.css';
+import '@fontsource/battambang/khmer-700.css';
+import '@fontsource/battambang/khmer-900.css';
 import './style.css';
 import './avatars.css';
 import './characters.css';
 import './mobile.css';
 import './battle.css';
+import './home.css';
+import './typography.css';
+import './home-responsive.css';
 
 function App() {
   const { t, language, move: moveLabel } = useLanguage();
@@ -62,7 +64,7 @@ function App() {
   const {preferences:appPreferences,update:updateAppPreferences}=useAppPreferences();
   const {muted,reduced}=appPreferences;
   const setMuted=(value:boolean)=>updateAppPreferences('muted',value);
-  const setReduced=(value:boolean)=>updateAppPreferences('reduced',value);
+
   const [historyOpen, setHistoryOpen] = useState(false);
   const [matchSummaryVisible, setMatchSummaryVisible] = useState(false);
   const [activity, setActivity] = useState(() => createActivity(crypto.randomUUID()));
@@ -181,15 +183,11 @@ function App() {
   const shown = session.phase === 'reveal' || session.phase === 'reaction' || session.phase === 'intermission' || session.phase === 'over';
   const currentRound = session.history.length + (shown ? 0 : 1);
   const announcement = latest ? session.phase === 'intermission' || session.phase === 'over' ? gameAnnouncement(language, session.gameNumber, latest.outcome === 'draw' ? null : latest.outcome === 'player' ? playerName.trim() : 'Bot', `${playerName.trim()} ${session.progress.scores.player}, Bot ${session.progress.scores.ai}`) : soloAnnouncement(language, latest, playerName.trim(), 'Bot') : null;
-  return <div className={`app ${screen === 'game' || privateBattle ? 'battle-app' : ''} ${reduced ? 'reduced' : ''}`}>
-    {screen !== 'game' && !privateBattle && <header className="header compact-header" inert={settingsOpen}>{screen === 'setup' ? <div className="setup-title"><button className="back-button" aria-label={t('Back')} onClick={() => setScreen('home')}>←</button><h1>{t('Single Player')}</h1></div> : <button className="brand" onClick={() => { timers.current.forEach(clearTimeout); timers.current = []; submitting.current = false; setScreen('home'); }} aria-label={t('Ching home')}><span className="brand-icon" aria-hidden="true">✳</span> ching<span className="brand-dot">.</span></button>}<div className="header-actions">{!picker && !help && <button className="settings-gear" aria-label={t('Settings')} onClick={openSettings}><GearIcon/></button>}</div></header>}
+  return <div className={`app ${screen === 'home' ? 'home-app' : ''} ${screen === 'game' || privateBattle ? 'battle-app' : ''} ${reduced ? 'reduced' : ''}`}>
+    {screen !== 'game' && !privateBattle && <header className="header compact-header" inert={settingsOpen}>{screen === 'setup' ? <div className="setup-title"><button className="back-button" aria-label={t('Back')} onClick={() => setScreen('home')}>←</button><h1>{t('Single Player')}</h1></div> : <button className="brand" onClick={() => { timers.current.forEach(clearTimeout); timers.current = []; submitting.current = false; setScreen('home'); }} aria-label={t('Ching home')}><ChingWordmark/></button>}<div className="header-actions">{!picker && !help && <button className="settings-gear" aria-label={t('Settings')} onClick={openSettings}><GearIcon/></button>}</div></header>}
     <main inert={settingsOpen}>
       {picker && <AvatarPicker profile={profile} onSave={selectProfile} onClose={closePicker} reduced={reduced}/>}
-      {screen === 'multiplayer' ? <Multiplayer profile={profile} reduced={reduced} onChooseAvatar={openPicker} onSelectProfile={selectProfile} onBattleChange={setPrivateBattle} onSettings={openSettings} muted={muted} onMute={() => setMuted(!muted)} onReduced={setReduced} onHelp={() => setHelp(true)} onExit={() => setScreen('home')}/> : screen === 'home' ? <section className="mobile-home">
-        <div className="home-stage"><div className="stage-disc"/><div className="home-character"><Character profile={profile} state="ching" reduced={reduced}/></div><div className="home-character rival"><Character profile={session.aiProfile} state="block1" facing="left" reduced={reduced}/></div></div>
-        <div className="home-modes"><button className="mode-button primary-mode" onClick={() => setScreen('setup')}><span><strong>{t('Single Player')}</strong><span>{t('Play against a bot')}</span></span><b aria-hidden="true">→</b></button><button className="mode-button secondary-mode" onClick={() => setScreen('multiplayer')}><span><strong>{t('Multiplayer')}</strong><span>{t('Play with friends')}</span></span><b aria-hidden="true">→</b></button></div>
-        <div className="home-tools"><button className="text-control" onClick={() => setMuted(!muted)} aria-pressed={!muted}>{t(muted ? 'Sound off' : 'Sound on')}</button><button ref={helpButton} className="text-control" onClick={() => setHelp(true)}>{t('How to play')}</button></div>
-      </section> : screen === 'setup' ? <section className="solo-setup">
+      {screen === 'multiplayer' ? <Multiplayer profile={profile} reduced={reduced} onChooseAvatar={openPicker} onSelectProfile={selectProfile} onBattleChange={setPrivateBattle} onSettings={openSettings} muted={muted} onMute={() => setMuted(!muted)} onHelp={() => setHelp(true)} onExit={() => setScreen('home')}/> : screen === 'home' ? <HomeScreen onSingle={() => setScreen('setup')} onMulti={() => setScreen('multiplayer')} onHelp={() => setHelp(true)} helpButton={helpButton}/> : screen === 'setup' ? <section className="solo-setup">
         <CharacterSelect profile={profile} onSelect={selectProfile} onMore={openPicker} reduced={reduced}/>
         <div className="setup-choices"><label className="name-field">{t('Your name')}<input value={playerName} autoComplete="nickname" maxLength={20} onChange={e => setPlayerName(e.target.value)} aria-invalid={!validPlayerName(playerName)}/></label>{!validPlayerName(playerName) && <p className="room-error" role="alert">{t('Enter a name of 1–20 characters.')}</p>}
         <div className="setup-difficulty"><h2>{t('Bot difficulty')}</h2><div className="segmented" role="group" aria-label={t('Difficulty')}>{(['easy', 'normal', 'hard'] as const).map(d => <button key={d} className={difficulty === d ? 'active' : ''} onClick={() => setDifficulty(d)} aria-pressed={difficulty === d}>{t(d)}</button>)}</div></div>
@@ -206,11 +204,11 @@ function App() {
     </main>
     {settingsOpen && <SettingsPage onBack={closeSettings} multiplayer={screen === 'multiplayer' && privateBattle} solo={screen === 'game'}/>}
     {help && (screen === 'game' || privateBattle) && <BattleSheet title={t('How to Ching')} onClose={() => setHelp(false)}><p>{t('Ching is a Cambodian schoolyard hand game. Local rules may vary; this version follows the rules supplied for this game.')}</p><p>{t('Both start at 0 គ្រាប់ (ammo). Reload adds one. Keep unused ammo between rounds.')}</p><MoveHelp/>{privateBattle && <><p>{t('Everyone starts at 0 ammo. Reload, block, or attack one active target. Choices and targets stay secret until all active players lock. Attacks cost ammo once, including blocked and canceled attacks. A matching block stops every incoming attack it covers; any uncovered hit eliminates you.')}</p><p>{t('When two players attack each other, the stronger attack wins and equal attacks cancel. Attacking never protects you from a third player. Every legal attack resolves, even if its attacker is eliminated that round. The last survivor wins; everyone eliminated together is a draw. Players eliminated in the same round share a placement.')}</p></>}</BattleSheet>}
-    {screen !== 'game' && !privateBattle && <dialog ref={helpRef} className="help-dialog" onCancel={() => setHelp(false)} onClose={() => { setHelp(false); helpButton.current?.focus(); }}><div className="help-header"><div className="eyebrow">{t("A QUICK SCHOOLYARD LESSON")}</div><button className="icon-button" aria-label={t("Close instructions")} onClick={() => setHelp(false)}>×</button></div><h2>{t("How to Ching")}<span>.</span></h2><p>{t("Ching is a Cambodian schoolyard hand game. Local rules may vary; this version follows the rules supplied for this game.")}</p><p>{t("A move round is one action each. A game ends with a winner or draw. A match ends at the selected win target. The timer defaults missing moves to Block 1. Game winners earn 1 point; draws earn none. Between games ammo resets while scores stay.")}</p><ol className="steps"><li><strong>{t("Load up.")}</strong> {t("Both start at 0 គ្រាប់ (ammo). Reload adds one. Keep unused ammo between rounds.")}</li><li><strong>{t("Make a secret choice.")}</strong> {t("Pick a reload, attack, or block. Your rival locks its move before you choose. Clap, then reveal together.")}</li><li><strong>{t("Read your rival.")}</strong> {t("An attack beats a reload or incorrect block. Between attacks, the stronger one wins. One successful attack ends the game.")}</li></ol><div className="help-moves">{MOVE_LIST.map(m => <div key={m.id}><Gesture move={m.id} small/><div><strong>{moveLabel(m.id)} <span>{m.kind === 'attack' ? t('Cost {cost} ammo · power {power}', { cost: m.cost, power: m.strength }) : m.kind === 'reload' ? '+1 គ្រាប់' : 'Free'}</span></strong><p>{t(m.gesture)}</p>{m.kind === 'block' && <small>{t("Stops")}{m.stops.map(id => moveLabel(id)).join(' and ')}.</small>}</div></div>)}</div><p><strong>{t("No attack?")}</strong> {t("Reload/block and block/block rounds continue. All changes use ammo from the start of the round and apply together, even in the final round.")}</p><label className="motion-toggle"><input type="checkbox" checked={reduced} onChange={e => setReduced(e.target.checked)}/>{t("Reduced motion")}</label><fieldset className="rule-settings"><legend>{t("House rules")}</legend><label><input type="checkbox" checked={rules.equalAttacks === 'cancel'} onChange={e => setRules(r => ({ ...r, equalAttacks: e.target.checked ? 'cancel' : 'draw' }))}/> {t("Equal attacks cancel and play continues (off: game ends in a draw)")}</label><label><input type="checkbox" checked={rules.blocksStopWeaker} onChange={e => setRules(r => ({ ...r, blocksStopWeaker: e.target.checked }))}/> {t("Blocks also stop weaker attacks (default: listed attacks only)")}</label><label><input type="checkbox" checked={rules.spendFailedAttacks} onChange={e => setRules(r => ({ ...r, spendFailedAttacks: e.target.checked }))}/> {t("Every attack spends ammo, including blocked or canceled attacks")}</label></fieldset><button className="play-button" onClick={() => setHelp(false)}>{t("Got it")}<span>✓</span></button></dialog>}
+    {screen !== 'game' && !privateBattle && <dialog ref={helpRef} className="help-dialog" onCancel={() => setHelp(false)} onClose={() => { setHelp(false); helpButton.current?.focus(); }}><div className="help-header"><div className="eyebrow">{t("A QUICK SCHOOLYARD LESSON")}</div><button className="icon-button" aria-label={t("Close instructions")} onClick={() => setHelp(false)}>×</button></div><h2>{t("How to Ching")}<span>.</span></h2><p>{t("Ching is a Cambodian schoolyard hand game. Local rules may vary; this version follows the rules supplied for this game.")}</p><p>{t("A move round is one action each. A game ends with a winner or draw. A match ends at the selected win target. The timer defaults missing moves to Block 1. Game winners earn 1 point; draws earn none. Between games ammo resets while scores stay.")}</p><ol className="steps"><li><strong>{t("Load up.")}</strong> {t("Both start at 0 គ្រាប់ (ammo). Reload adds one. Keep unused ammo between rounds.")}</li><li><strong>{t("Make a secret choice.")}</strong> {t("Pick a reload, attack, or block. Your rival locks its move before you choose. Clap, then reveal together.")}</li><li><strong>{t("Read your rival.")}</strong> {t("An attack beats a reload or incorrect block. Between attacks, the stronger one wins. One successful attack ends the game.")}</li></ol><div className="help-moves">{MOVE_LIST.map(m => <div key={m.id}><Gesture move={m.id} small/><div><strong>{moveLabel(m.id)} <span>{m.kind === 'attack' ? t('Cost {cost} ammo · power {power}', { cost: m.cost, power: m.strength }) : m.kind === 'reload' ? '+1 គ្រាប់' : 'Free'}</span></strong><p>{t(m.gesture)}</p>{m.kind === 'block' && <small>{t("Stops")}{m.stops.map(id => moveLabel(id)).join(' and ')}.</small>}</div></div>)}</div><p><strong>{t("No attack?")}</strong> {t("Reload/block and block/block rounds continue. All changes use ammo from the start of the round and apply together, even in the final round.")}</p><fieldset className="rule-settings"><legend>{t("House rules")}</legend><label><input type="checkbox" checked={rules.equalAttacks === 'cancel'} onChange={e => setRules(r => ({ ...r, equalAttacks: e.target.checked ? 'cancel' : 'draw' }))}/> {t("Equal attacks cancel and play continues (off: game ends in a draw)")}</label><label><input type="checkbox" checked={rules.blocksStopWeaker} onChange={e => setRules(r => ({ ...r, blocksStopWeaker: e.target.checked }))}/> {t("Blocks also stop weaker attacks (default: listed attacks only)")}</label><label><input type="checkbox" checked={rules.spendFailedAttacks} onChange={e => setRules(r => ({ ...r, spendFailedAttacks: e.target.checked }))}/> {t("Every attack spends ammo, including blocked or canceled attacks")}</label></fieldset><button className="play-button" onClick={() => setHelp(false)}>{t("Got it")}<span>✓</span></button></dialog>}
   </div>;
 }
 
-createRoot(document.getElementById('root')!).render(<React.StrictMode><LanguageProvider><AppPreferencesProvider><App/></AppPreferencesProvider></LanguageProvider></React.StrictMode>);
+createRoot(document.getElementById('root')!).render(<React.StrictMode><LanguageProvider><AppPreferencesProvider><MusicProvider><App/></MusicProvider></AppPreferencesProvider></LanguageProvider></React.StrictMode>);
 
 
 

@@ -87,8 +87,8 @@ function Hand({ skin, type }: { skin: string; type: 'fist' | 'open' | 'fingers' 
   </g>;
 }
 
-export function Character({ profile, state = 'idle', move, facing = 'right', reduced = false, cycle = 'preview' }: {
-  profile: AvatarProfile; state?: CharacterState; move?: MoveId; facing?: 'left' | 'right'; reduced?: boolean; cycle?: string;
+export function Character({ profile, state = 'idle', move, facing = 'right', reduced = false, cycle = 'preview', casual = false }: {
+  profile: AvatarProfile; state?: CharacterState; move?: MoveId; facing?: 'left' | 'right'; reduced?: boolean; cycle?: string; casual?: boolean;
 }) {
   const { t } = useLanguage();
   const id = useId().replace(/:/g, '');
@@ -102,7 +102,7 @@ export function Character({ profile, state = 'idle', move, facing = 'right', red
     <ellipse cx="110" cy="273" rx="56" ry="7" fill="#302e4615"/>
     <g transform={facing === 'left' ? 'translate(220 0) scale(-1 1)' : undefined}>
       <g key={`${cycle}-${profile.avatarId}-${state}`} className="character-body" stroke="#302e46" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-        <BackDetails id={profile.avatarId}/>
+        {!casual && <BackDetails id={profile.avatarId}/>}
         <g className="character-legs"><path d="M94 188 L90 256 M126 188 L132 256" fill="none" stroke="#302e46" strokeWidth="24"/><path d="M94 188 L90 256 M126 188 L132 256" fill="none" stroke={design.pants} strokeWidth="19"/>
           {profile.avatarId === 'runner' && <path d="M92 219 L90 253 M129 219 L132 253" fill="none" stroke={design.skin} strokeWidth="18"/>}
           <path d="M90 250 Q79 248 76 263 Q83 272 100 266 L101 255 Z M132 250 Q143 248 147 263 Q140 272 123 266 L121 255 Z" fill={design.shoes}/>
@@ -110,8 +110,8 @@ export function Character({ profile, state = 'idle', move, facing = 'right', red
         </g>
         <rect x="100" y="88" width="20" height="30" rx="7" fill={design.skin}/>
         <path d="M77 108 Q110 95 143 108 L149 190 Q110 205 71 190 Z" fill={design.shirt}/>
-        <Outfit id={profile.avatarId}/>
-        <g className="character-head"><image href={`${import.meta.env.BASE_URL}characters/heads/${profile.avatarId}.svg`} x="60" y="13" width="100" height="100" clipPath={`url(#head-${id})`}/></g>
+        {casual ? <g><path d="M89 106 Q110 124 131 106" fill="none" stroke={design.accent} strokeWidth="5"/>{profile.avatarId === 'student' && <><path d="M88 109 L98 113 L94 162 L82 159Z" fill="#ad3034"/><path d="M86 126 L97 128 M85 139 L96 141 M84 152 L94 154 M90 115 L86 158" fill="none" stroke="#fff4dc" strokeWidth="2"/></>}</g> : <Outfit id={profile.avatarId}/>}
+        <g className="character-head"><image href={`${import.meta.env.BASE_URL}characters/heads/${profile.avatarId}.svg`} x="60" y="13" width="100" height="100" clipPath={`url(#head-${id})`}/>{casual && profile.avatarId === 'runner' && <><defs><pattern id={`krama-${id}`} width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#fff4dc"/><path d="M0 2H8M2 0V8" stroke="#ad3034" strokeWidth="3" opacity=".9"/></pattern></defs><path d="M84 48Q110 42 137 48V56Q110 50 84 56Z" fill={`url(#krama-${id})`} stroke="#302e46" strokeWidth="2"/></>}</g>
         {[0, 1].map(side => {
           const offset = side * 2;
           const upper: Vars = { '--angle': `${pose[offset]}deg`, '--windup': `${windup[offset]}deg`, '--clap-away': `${pose[offset] + (side === 0 ? 18 : -18)}deg` };

@@ -12,7 +12,7 @@ describe('English and Khmer localization', () => {
     for (const [key, text] of Object.entries(catalogs.en)) { expect(catalogs.km[key], key).toBeTruthy(); expect(placeholders(catalogs.km[key]), key).toEqual(placeholders(text)); }
   });
   it('centralizes every static interface translation key, including accessible labels', () => {
-    for (const file of ['main.tsx', 'BattleUI.tsx', 'SettingsPage.tsx', 'SoloGameResult.tsx', 'ActivityUI.tsx', 'activity.ts', 'roundPresentation.ts', 'CharacterSelect.tsx', 'MatchOptions.tsx', 'AvatarPicker.tsx', 'Avatar.tsx', 'Character.tsx', 'multiplayer/Multiplayer.tsx', 'i18n/react.tsx']) {
+    for (const file of ['main.tsx', 'HomeScreen.tsx', 'BattleUI.tsx', 'SettingsPage.tsx', 'SoloGameResult.tsx', 'ActivityUI.tsx', 'activity.ts', 'roundPresentation.ts', 'CharacterSelect.tsx', 'MatchOptions.tsx', 'AvatarPicker.tsx', 'Avatar.tsx', 'Character.tsx', 'multiplayer/Multiplayer.tsx', 'i18n/react.tsx']) {
       const text = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
       const ast = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
       function walk(node: ts.Node) {
@@ -46,8 +46,8 @@ describe('English and Khmer localization', () => {
     expect(translate('km', 'Scan to join private Ching room {code}', { code: 'ABC234' })).toContain('ABC234');
   });
   it('preserves attack names and localizes reload and blocks', () => {
-    for (const id of ['ching', 'swing', 'klarteang', 'seuteang'] as const) expect(moveName('km', id)).toBe(MOVES[id].name);
-    expect(moveName('km', 'reload')).toBe('បញ្ចូលគ្រាប់'); expect(moveName('km', 'block1')).toBe('ការពារ ១');
+    for (const id of ['swing', 'klarteang', 'seuteang'] as const) expect(moveName('km', id)).toBe(MOVES[id].name);
+    expect(moveName('km', 'ching')).toBe('ឈីង'); expect(moveName('en', 'ching')).toBe('Ching'); expect(moveName('km', 'reload')).toBe('បញ្ចូលគ្រាប់'); expect(moveName('km', 'block1')).toBe('ការពារ ១');
   });
   it('persists the preference, defaults safely, and works when storage is unavailable', () => {
     const values = new Map<string, string>(); const storage = { getItem: (key: string) => values.get(key) ?? null, setItem: (key: string, value: string) => { values.set(key, value); } };
@@ -67,6 +67,6 @@ describe('English and Khmer localization', () => {
   it.each(['hit', 'blocked', 'canceled', 'outmatched'] as const)('localizes multiplayer %s from structured events independently for each viewer', result => {
     const event = { attackerId: 'a', targetId: 'b', move: 'ching' as const, result }; const name = (id: string) => id === 'a' ? 'Dara' : 'Malis';
     const english = attackMessage('en', event, name), khmer = attackMessage('km', event, name);
-    expect(english).toContain('Dara'); expect(khmer).toContain('Dara'); expect(khmer).toContain('Malis'); expect(khmer).toContain('Ching'); expect(khmer).not.toBe(english); expect(event.result).toBe(result);
+    expect(english).toContain('Dara'); expect(khmer).toContain('Dara'); expect(khmer).toContain('Malis'); expect(khmer).toContain('ឈីង'); expect(khmer).not.toBe(english); expect(event.result).toBe(result);
   });
 });

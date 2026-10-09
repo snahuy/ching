@@ -16,5 +16,5 @@ it.each(['player','ai','draw'] as const)('shows the actual %s game outcome, iden
 it('renders the winner announcement in Khmer without translating nicknames',()=>{
   vi.stubGlobal('localStorage',{getItem:()=> 'km'});
   const html=renderToStaticMarkup(<LanguageProvider><SoloGameResult round={resolveRound(1,0,'ching','reload')} game={2} name="Dara" profile={DEFAULT_PROFILE} botProfile={DEFAULT_PROFILE} scores={{player:1,ai:0}}/></LanguageProvider>);
-  expect(html).toContain('អ្នកឈ្នះ!');expect(html).toContain('Dara');expect(html).toContain('Ching');expect(html).toContain('ល្បែងទី 2');
+  expect(html).toContain('អ្នកឈ្នះ!');expect(html).toContain('Dara');expect(html).toContain('ឈីង');expect(html).toContain('ល្បែងទី 2');
 });

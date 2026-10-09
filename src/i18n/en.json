@@ -547,5 +547,20 @@
   "Hide": "Hide",
   "Ching — Version {version}": "Ching — Version {version}",
   "The multiplayer match continues while Settings is open.": "The multiplayer match continues while Settings is open.",
-  "The single-player move timer is paused while Settings is open.": "The single-player move timer is paused while Settings is open."
+  "The single-player move timer is paused while Settings is open.": "The single-player move timer is paused while Settings is open.",
+  "home.classic": "THE CHILDHOOD CLASSIC",
+  "home.ready": "Ready, set,",
+  "home.ching": "Ching!",
+  "home.nostalgia": "A little strategy. A lot of nostalgia.",
+  "home.challenge": "Challenge the bot",
+  "home.memories": "Made for the memories.",
+  "home.version": "v{version}",
+  "home.artDescription": "Cambodian friends practice Ching in front of a stylized Phnom Penh Independence Monument.",
+  "home.tapCharacter": "Play a Reload, Ching, or Defend gesture with {name}",
+  "Background Music": "Background Music",
+  "Music volume": "Music volume",
+  "Preview music": "Preview music",
+  "Stop preview": "Stop preview",
+  "{volume} percent": "{volume} percent",
+  "Schoolyard Afternoon — an original, gentle roneat-inspired instrumental. Preview lasts 12 seconds.": "Schoolyard Afternoon — an original, gentle roneat-inspired instrumental. Preview lasts 12 seconds."
 }

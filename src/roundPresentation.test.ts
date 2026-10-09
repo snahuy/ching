@@ -8,7 +8,7 @@ describe('event-based round presentation',()=>{
   it('labels reload gains, familiar attacks, blocks and targets in both languages',()=>{
     expect(revealedMoveLabel('en','reload')).toBe('Reload (+1 ammo)');
     expect(revealedMoveLabel('km','reload')).toContain('គ្រាប់');
-    expect(revealedMoveLabel('km','ching','Dara')).toBe('Ching → Dara');
+    expect(revealedMoveLabel('km','ching','Dara')).toBe('ឈីង → Dara');
     for(const m of MOVE_LIST)expect(revealedMoveLabel('en',m.id)).toContain(m.name);
   });
   it.each([['ching','block1','No winner','Ching was blocked.'],['ching','ching','No winner','Equal attacks canceled.'],['reload','reload','Both players reloaded.',''],['ching','reload','Dara wins!','Ching hit Bot while reloading.'],['ching','swing','Bot wins!','Swing beats Ching.']] as const)('announces %s/%s using resolved outcomes',(p,a,headline,detail)=>{

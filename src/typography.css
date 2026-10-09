@@ -1,0 +1,87 @@
+/* Shared text metrics. Khmer clusters stay intact; no per-letter markup or tracking. */
+:root{--font-ui:'Source Sans 3','Battambang',sans-serif;--text-leading:1.55;--heading-leading:1.3;--control-leading:1.55}
+html[lang=km]{--font-ui:'Source Sans 3','Battambang',sans-serif;--text-leading:1.85;--heading-leading:1.8;--control-leading:1.8}
+html .app,html .app :where(button,input,select,textarea,h1,h2,h3,h4,p,label,legend,summary,strong,small,span,li,a,div,footer){font-family:var(--font-ui)}
+html .app :where(p,label,legend,summary,li,small){line-height:var(--text-leading);word-break:normal;overflow-wrap:break-word}
+html .app :where(h1,h2,h3,h4){line-height:var(--heading-leading);margin-block:0 .35em;word-break:normal;overflow-wrap:break-word}
+html .app :where(button,input,select,textarea){line-height:var(--control-leading);min-height:44px}
+html[lang=km] .app,html[lang=km] .app *{font-family:var(--font-ui);letter-spacing:normal!important;word-break:normal}
+html[lang=km] .app :is(h1,h2,h3,h4){line-height:var(--heading-leading)}
+.app :is(button,label,legend,summary,.room-error,.settings-notice,.preview-text,.sheet-heading,.help-header){min-width:0;white-space:normal;overflow-wrap:break-word}
+.app :is(.sheet-heading,.help-header,.picker-header,.flow-header,.setup-title){align-items:center;gap:12px}
+.app :is(.sheet-heading,.help-header,.picker-header) h2{flex:1;min-width:0}
+.app :is(.room-error,.profile-notice,.guest-note,.settings-notice){height:auto;max-height:none;line-height:var(--text-leading);padding-block:4px}
+.app :is(.settings-option h2,.preview-text h3,.battle-help-moves h3,.help-moves strong){line-height:var(--heading-leading);margin-top:0}
+.app :is(.segmented button,.avatar-filters button,.character-rail>button,.reaction-picker button,.sheet-action){height:auto;padding-block:8px}
+.app :is(.character-rail>button>span,.reaction-picker strong,.opponent-chip strong,.opponent-chip span span){line-height:var(--text-leading);white-space:normal;overflow:visible;text-overflow:clip}
+.app :is(.end-card,.help-dialog,.avatar-dialog,.battle-sheet){overflow-y:auto;overflow-x:visible;max-width:calc(100% - 16px)}
+.app :is(.end-stats,.solo-result-score,.room-roundbar,.room-topbar,.invite-actions){flex-wrap:wrap}
+.app .home-intro h1{margin:0 0 8px;line-height:var(--heading-leading);font-size:clamp(2.5rem,7dvh,4rem)}
+html[lang=km] .app .home-intro h1{font-size:clamp(2rem,4.5dvh,2.75rem);line-height:1.8}
+.app .home-intro h1>span{line-height:inherit;overflow-wrap:break-word}
+.app .home-ching-line{font-size:1em}
+.app .home-ching-line:before,.app .home-ching-line:after{top:48%;width:14px;height:5px;box-shadow:0 12px 0 #b32c34}
+.app .home-ching-line:before{left:-26px}.app .home-ching-line:after{right:-26px}
+.app .home-description{line-height:var(--text-leading)}
+.app .mode-button :is(strong,.mode-copy>span){line-height:var(--control-leading)}
+.app .home-footer{line-height:var(--text-leading)!important}
+.app .battle-moves{grid-template-rows:repeat(2,minmax(5.5rem,auto))}
+.app .battle-move{height:auto;padding:5px 3px;gap:2px}
+.app .battle-move :is(strong,.battle-move-cost){line-height:var(--control-leading);white-space:normal;overflow:visible;overflow-wrap:normal;text-align:center}
+.app .battle-fighter{grid-template-rows:auto auto minmax(0,1fr)}
+.app .battle-revealed-move{height:auto;max-height:none;min-height:2.6rem;line-height:var(--control-leading);overflow:visible;padding:3px 4px}
+.app .battle-stage{grid-template-rows:minmax(0,1fr) 6rem}
+.app .battle-result{height:6rem;overflow:auto;align-items:flex-start;padding:4px}
+.app .activity-bar{align-items:flex-start}
+.app .activity-latest>*{display:block;white-space:normal;overflow:visible;text-overflow:clip;-webkit-line-clamp:unset;line-height:var(--text-leading)}
+.app .activity-bar>button{white-space:normal;flex-shrink:0}
+.app .reaction-bubble{line-height:var(--text-leading);overflow:visible;white-space:normal;padding:6px 8px}
+.app .opponent-revealed-move{white-space:normal;overflow:visible;line-height:var(--text-leading)}
+.app .room-battle-arena{grid-template-rows:minmax(0,1fr) auto}
+.app .opponent-rail{min-height:5rem;overflow-y:visible}
+.app .solo-result-card :is(h2,p,strong,span){line-height:var(--text-leading)}
+.app .solo-result-card h2{line-height:var(--heading-leading)}
+.app .battle-large-text :is(.battle-result,.battle-revealed-move){height:auto;max-height:none}
+.app .battle-large-text .battle-stage{grid-template-rows:minmax(14rem,auto) auto}
+.app .home-large-text h1{font-size:2.5rem}
+@media(max-width:350px){.app .home-intro h1{font-size:2.4rem}html[lang=km] .app .home-intro h1{font-size:1.8rem}.app .mode-button{grid-template-columns:30px minmax(0,1fr) 24px;gap:8px;padding-inline:10px}.app .mode-button strong{font-size:1.25rem}.app .mode-icon svg{width:30px}}
+@media(orientation:landscape) and (max-height:550px){.app .home-intro h1{font-size:1.8rem}html[lang=km] .app .home-intro h1{font-size:1.3rem}.app .battle-stage{grid-template-rows:minmax(0,1fr) 5.5rem}.app .battle-result{height:5.5rem}}
+
+/* Setup text must not sit underneath a sticky action dock. */
+.app .setup-dock{position:static;bottom:auto}
+@media(max-width:440px){.app .picker-layout{display:flex;flex-direction:column;gap:16px}.app .avatar-preview{width:100%;max-width:100%;align-self:stretch}.app .avatar-colors>div{grid-template-columns:repeat(4,minmax(0,1fr))}.app .avatar-colors button{width:40px;height:40px;min-height:40px}.app .picker-header{flex-wrap:wrap}.app .picker-header h2{font-size:1.4rem}.app .guest-note{font-size:.8rem}.app .setup-preview{height:150px}}
+
+.app .picker-footer{position:static;flex-wrap:wrap;gap:10px}.app .picker-footer .play-button{min-width:0;white-space:normal}.app .picker-header>div{min-width:0;flex:1}.app .picker-header .icon-button{flex:none}
+
+/* Reserve readable text while giving short multiplayer arenas room to shrink. */
+.app .battle-stage{grid-template-rows:minmax(0,1fr) 5rem}.app .battle-result{height:5rem}
+.app .battle-moves{grid-template-rows:repeat(2,minmax(5rem,auto))}.app .battle-move .gesture-icon{height:24px;flex-basis:24px}
+.app .opponent-chip{flex-basis:190px;max-width:240px}.app .opponent-chip>span{flex:1;min-width:0}.app .opponent-chip span span{font-size:.6875rem}
+.app .battle-revealed-move:empty{min-height:0;padding:0}
+.app .battle-large-text .battle-result{height:auto;min-height:5rem}
+
+.app .opponent-chip .avatar-image{flex:0 0 32px;max-width:32px;max-height:32px}
+.app .opponent-chip>span:not(.avatar-image){flex:1;min-width:0}
+.app .opponent-chip>span.avatar-image{flex:0 0 32px}
+.app .battle-fighter-heading{display:grid;grid-template-columns:1fr;line-height:var(--text-leading)}
+.app .battle-fighter-heading :is(strong,span){line-height:var(--text-leading)}
+.app .battle-revealed-move{min-height:0}
+.app .battle-fighter-heading strong{font-size:.8125rem}
+
+/* Settings uses identical bilingual geometry, with natural text growth. */
+html .app .settings-content header{display:grid;grid-template-columns:44px minmax(0,1fr) 24px;align-items:center;gap:14px}
+html .app .settings-content h1{margin:0;line-height:1.8}
+html .app .settings-content .settings-option h2{margin:0;line-height:1.8}
+html .app .settings-content :is(.settings-choices button,.language-toggle button){line-height:1.8;padding:8px;flex:1 1 0;min-width:0;white-space:normal}
+html .app .settings-content .language-toggle{display:grid;grid-template-columns:minmax(0,1fr) 4px minmax(0,1fr);align-items:stretch}
+html .app .settings-content .language-toggle>span{width:4px;text-align:center;line-height:1.8;align-self:center}
+html .app .settings-content :is(.settings-notice,footer){line-height:1.8}
+html .app .settings-stable-text{display:grid;min-width:0;line-height:inherit;font-family:'Source Sans 3','Battambang',sans-serif;letter-spacing:normal}
+html .app .settings-stable-text>span{grid-area:1/1;min-width:0;line-height:inherit;font-family:inherit;letter-spacing:normal;white-space:normal;overflow-wrap:break-word}
+.settings-text-measure{visibility:hidden;pointer-events:none;user-select:none}
+
+.app .music-volume-label{display:flex;justify-content:space-between;gap:12px;align-items:center;line-height:1.8}
+.app .music-volume-label output{flex:none;font-variant-numeric:tabular-nums}
+.app .music-settings input[type=range]{width:100%;min-width:0;min-height:44px;padding:0;accent-color:#ac292e}
+.app .music-preview-button{border:1px solid #ecc4bd;background:#f9e3de;color:#a52a30;border-radius:12px;padding:8px 14px;min-height:48px;line-height:1.8}
+.app .music-description{margin:0;font-size:.875rem;line-height:1.8;color:#625b70}
