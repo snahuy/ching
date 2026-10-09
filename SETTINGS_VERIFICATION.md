@@ -1,0 +1,10 @@
+# Settings verification
+
+- Settings is a dedicated full-screen dialog/page opened by a gear on home, setup/lobby headers, game menu, and final solo results. Underlying screens remain mounted. Language selectors appear only in Settings.
+- Release/package metadata and lockfile updated to 1.0.2. `src/appInfo.ts` imports the package version; the localized footer interpolates that central value.
+- Language, sound effects, reduced motion and reaction bubble visibility apply immediately. Language uses its existing local preference; the other options share one persisted preferences context. Legacy reaction mute is migrated, explicit reduced-motion preferences override the OS default, and unavailable storage falls back safely.
+- Browser persistence check: selected Khmer, sound On, reduced motion On and reaction bubbles Hide, reloaded, then reopened Settings. All selections persisted. English and Khmer screenshots inspected at 360×640, 390×844, 430×900 and 667×375 landscape; no horizontal overflow and every button met 44×44 minimum. Keyboard focus remained in Settings; Escape and Back returned to the previous screen.
+- Solo fake-clock check: opened Settings in Game 1 / Round 2 at 8 seconds remaining and 1 ammo per player. After 20 seconds in Settings, the round was still choosing. Back restored 8 seconds with identical round/ammo/scores; timeout selected Block 1 only after the remaining time elapsed. Settings does not reroll the precommitted AI move.
+- Real multiplayer check: with a five-second server timer, Settings showed the continuing-match notice. Both connected players timed out to Block 1; the server advanced to Round 2 while Settings stayed open. Back preserved the room code and scores and showed the live round. Host language was Khmer; guest language remained English, and no language preference was sent to the room server.
+- Screenshots saved in `.verification/settings-*.png`, including persistence/mobile captures, `settings-room-km.png`, and `settings-solo-return.png`.
+- Launch remains `npm run dev`, then http://localhost:5173.

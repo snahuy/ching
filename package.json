@@ -1,0 +1,39 @@
+{
+  "name": "ching",
+  "version": "1.0.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k -n server,web \"npm:server:dev\" \"npm:dev:web\"",
+    "build": "tsc -b && vite build",
+    "test": "vitest run",
+    "preview": "vite preview --host 0.0.0.0",
+    "dev:web": "vite --host 0.0.0.0",
+    "server:dev": "tsx watch server/index.ts",
+    "start": "tsx server/index.ts"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "^5.3.0",
+    "@fontsource/noto-sans-khmer": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tsx": "^4.23.15",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@types/ws": "^8.18.2",
+    "concurrently": "^10.0.5",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.0",
+    "vitest": "^5.0.3"
+  },
+  "overrides": {
+    "shell-quote": "^1.11.0"
+  }
+}
