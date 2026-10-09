@@ -1,11 +1,13 @@
+import {readFileSync} from 'node:fs';
+import {catalogs} from './i18n/core';
 import { describe, expect, it } from 'vitest';
 import { AVATARS, BACKGROUNDS, CATEGORIES, DEFAULT_PROFILE, PROFILE_KEY, randomAvatar, readProfile, saveProfile } from './avatars';
 describe('avatar collection and guest profiles', () => {
-  it('has 24 unique avatars, four in every category, and eight colors', () => {
-    expect(AVATARS).toHaveLength(24);
-    expect(new Set(AVATARS.map(a => a.id)).size).toBe(24);
-    expect(new Set(AVATARS.map(a => a.name)).size).toBe(24);
-    CATEGORIES.slice(1).forEach(c => expect(AVATARS.filter(a => a.category === c)).toHaveLength(4));
+  it('has the revised unique roster, populated categories, and eight colors', () => {
+    expect(AVATARS).toHaveLength(21);
+    expect(new Set(AVATARS.map(a => a.id)).size).toBe(21);
+    expect(new Set(AVATARS.map(a => a.name)).size).toBe(21);
+    CATEGORIES.slice(1).forEach(c => expect(AVATARS.filter(a => a.category === c)).not.toHaveLength(0));
     expect(new Set(BACKGROUNDS.map(b => b.color)).size).toBe(8);
   });
   it('saves and restores an avatar and its background', () => {
@@ -27,9 +29,16 @@ describe('avatar collection and guest profiles', () => {
     expect(saveProfile({ setItem: () => { throw new Error('quota'); } }, DEFAULT_PROFILE)).toBe(false);
   });
   it('random selection spans the whole collection and avoids the current avatar', () => {
-    expect(new Set(Array.from({ length: 24 }, (_, i) => randomAvatar(undefined, () => i / 24))).size).toBe(24);
+    expect(new Set(Array.from({ length: AVATARS.length }, (_, i) => randomAvatar(undefined, () => i / AVATARS.length))).size).toBe(21);
     for (const avatar of AVATARS) {
-      for (let i = 0; i < 24; i++) expect(randomAvatar(avatar.id, () => i / 24)).not.toBe(avatar.id);
+      for (let i = 0; i < AVATARS.length; i++) expect(randomAvatar(avatar.id, () => i / AVATARS.length)).not.toBe(avatar.id);
     }
   });
 });
+
+it('migrates removed avatars to Sok while keeping their background',()=>{for(const id of ['student','dancer','robot','astronaut','ninja','pirate','phoenix','wizard','spirit','gamer','runner'])expect(readProfile({getItem:()=>JSON.stringify({avatarId:id,backgroundId:'mint'})})).toEqual({avatarId:'sok',backgroundId:'mint'});});
+it('keeps requested names and the renamed Robot ID',()=>{expect(AVATARS.find(a=>a.id==='bazooka')?.name).toBe('Robot');expect(AVATARS.find(a=>a.id==='bopha')?.name).toBe('Bopha');expect(AVATARS.find(a=>a.id==='elephant')?.name).toBe('Bopa Jumbo');expect(AVATARS.filter(a=>a.category==='Creator').map(a=>a.name)).toEqual(['Bro Sna']);});
+
+it('provides local profile and character art plus bilingual descriptions for the selectable roster',()=>{for(const a of AVATARS){for(const folder of ['avatars','characters/heads'])expect(readFileSync(new URL(`../public/${folder}/${a.id}.svg`,import.meta.url),'utf8')).toContain('<svg');expect(catalogs.en[a.description]).toBeTruthy();expect(catalogs.km[a.description]).toBeTruthy();}});
+
+it('includes Vandeoun in Cambodia-inspired and preserves Bro Sna as Creator',()=>{expect(AVATARS.find(a=>a.id==='vandeoun')).toMatchObject({name:'Vandeoun',category:'Cambodia-inspired'});expect(AVATARS.find(a=>a.id==='bro-sna')).toMatchObject({name:'Bro Sna',category:'Creator'});});

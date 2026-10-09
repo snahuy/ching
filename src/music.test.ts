@@ -5,7 +5,8 @@ afterEach(()=>{vi.unstubAllGlobals();vi.useRealTimers();});
 it('composes a deterministic, quiet, seamless original instrumental loop',()=>{
   const samples=composeMusic(8000), repeat=composeMusic(8000);
   expect(samples).toEqual(repeat);expect(samples.length/8000).toBeCloseTo(32*60/88,3);
-  let peak=0,power=0;for(const s of samples){expect(Number.isFinite(s)).toBe(true);peak=Math.max(peak,Math.abs(s));power+=s*s;}
+  expect(samples.every(Number.isFinite)).toBe(true);
+  let peak=0,power=0;for(const s of samples){peak=Math.max(peak,Math.abs(s));power+=s*s;}
   expect(peak).toBeLessThan(.3);expect(Math.sqrt(power/samples.length)).toBeGreaterThan(.01);
   expect(Math.abs(samples[0]-samples.at(-1)!)).toBeLessThan(.02);
 });

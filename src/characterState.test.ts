@@ -6,7 +6,7 @@ import { CHARACTER_DESIGNS } from './characterDesigns';
 
 describe('character animation follows resolved gameplay', () => {
   it('has a matching full-body design for every existing avatar', () => {
-    expect(Object.keys(CHARACTER_DESIGNS).sort()).toEqual(AVATARS.map(a => a.id).sort());
+    for(const avatar of AVATARS) expect(CHARACTER_DESIGNS[avatar.id]).toBeDefined();
   });
   for (const player of MOVE_LIST) for (const ai of MOVE_LIST) {
     it(`${player.name} vs ${ai.name}: hides locked moves, reveals together, reacts to actual outcome`, () => {

@@ -39,6 +39,11 @@ type Vars = CSSProperties & Record<`--${string}`, string>;
 function Outfit({ id }: { id: AvatarId }) {
   const d = CHARACTER_DESIGNS[id];
   return <g className="character-outfit" fill={d.accent}>
+    {['sok','sokha'].includes(id) && <><path d="M87 110L110 132L133 110L124 140H96Z" fill="#e9edf4"/><path d="M110 132V191" fill="none"/><rect x="122" y="139" width="13" height="11" rx="2" fill="#344b6b"/>{id==='sokha' && <path d="M73 181H147L157 230Q110 240 63 230Z" fill={d.pants}/>}</>}
+    {['buntheoun','bopha'].includes(id) && <><path d="M78 110L139 158L143 141L91 104Z" fill={d.accent}/><path d="M74 181H146L153 239Q110 249 67 239Z" fill={d.pants}/><path d="M73 186H147" stroke={d.accent} strokeWidth="7"/>{[83,101,119,137].map(x=><path key={x} d={`M${x} 204l5 7-5 7-5-7Z`} fill={d.accent} strokeWidth="1"/>)}</>}
+    {['pu-som','ming-ya'].includes(id) && <><path d="M86 107L101 113L93 168L78 164Z" fill={d.accent}/><path d="M84 121L99 125M82 136L97 140M80 151L94 155M91 111L83 165M97 114L90 167" stroke="#fff4dc" strokeWidth="2" fill="none"/><path d="M110 114V190" fill="none"/>{id==='ming-ya' && <path d="M73 183H147L153 238Q110 246 67 238Z" fill={d.pants}/>}</>}
+    {id==='bro-sna' && <><path d="M89 105L110 119L131 105L121 179H99Z" fill="#fffaf0"/><path d="M106 119H114L117 127L110 158L103 127Z" fill={d.accent}/><path d="M89 105L81 128L101 145L110 174L99 194H74L77 111Z M131 105L139 128L119 145L110 174L121 194H146L143 111Z" fill={d.shirt}/><path d="M89 108L97 129L91 133L106 159M131 108L123 129L129 133L114 159" fill="none" stroke="#657189" strokeWidth="1.5"/><path d="M124 143H138M80 172H94M126 172H140M94 211L92 243M126 211L129 243" fill="none" stroke="#657189" strokeWidth="1.5"/><path d="M126 140L130 134L135 140Z" fill="#fffaf0" strokeWidth="1"/><circle cx="113" cy="177" r="2" fill="#b8b1a7" strokeWidth="1"/></>}
+    {id==='vandeoun' && <><path d="M88 117Q99 128 110 121Q121 128 132 117M110 139V169" fill="none" stroke="#815135" strokeWidth="1.5"/><path d="M73 183H147L149 222H118L110 199L102 222H71Z" fill={d.pants}/><path d="M74 181Q110 188 146 181V194Q110 201 74 194Z" fill={d.accent}/><path d="M125 193L140 221L128 225L116 195Z" fill={d.accent}/><path d="M125 199L136 204M128 210L140 215" fill="none" stroke="#fff4dc" strokeWidth="2"/></>}
     {id === 'student' && <><path d="M87 110 L110 134 L133 110 L124 142 H96 Z" fill="#e9edf4"/><path d="M110 134 V186" fill="none"/><rect x="119" y="139" width="15" height="12" rx="2"/></>}
     {id === 'dancer' && <><path d="M78 118 L140 106 L145 126 L81 143 Z"/><path d="M74 187 H146 L158 239 Q110 255 62 239 Z" fill={d.shirt}/><path d="M62 235 Q110 251 158 235 L158 245 Q110 261 62 245 Z"/><path d="M83 201 L88 233 M110 202 V242 M137 201 L132 233" fill="none" stroke="#f4c65d"/></>}
     {id === 'bokator' && <><path d="M88 106 L110 148 L132 106 L139 174 H81 Z" fill="#f4d9b0"/><path d="M74 168 H146 V181 H74 Z M132 181 L141 213 L129 214 L122 181 Z"/></>}
@@ -94,7 +99,7 @@ export function Character({ profile, state = 'idle', move, facing = 'right', red
   const id = useId().replace(/:/g, '');
   const design = CHARACTER_DESIGNS[profile.avatarId], avatar = avatarById(profile.avatarId);
   const posedState = state === 'blocked' ? (move?.startsWith('block') ? move as 'block1' | 'block2' | 'block3' : 'block1') : state;
-  const pose = POSES[posedState], windup = WINDUP[posedState] ?? pose;
+  const pose:Pose = profile.avatarId==='vandeoun' && posedState==='idle' ? [...toward(75,90,126,1),...toward(145,130,126,-1)] : POSES[posedState], windup = WINDUP[posedState] ?? pose;
   const hands = posedState === 'block2' || posedState === 'klarteang' ? 'fingers' : posedState === 'block3' ? 'hook' : ['ching', 'swing', 'clap', 'victory'].includes(posedState) ? 'open' : 'fist';
   const attack = ['ching', 'swing', 'klarteang', 'seuteang'].includes(state);
   return <svg viewBox="0 0 220 290" className={`character state-${state} ${reduced ? 'character-reduced' : ''}`} role="img" aria-label={`${avatar.name}: ${t(STATE_LABELS[state])}`} data-avatar={profile.avatarId} data-state={state} data-facing={facing} style={{ '--move-duration': `${ROUND_TIMING.move}ms`, '--clap-duration': `${ROUND_TIMING.clapBeat}ms` } as Vars}>
@@ -104,13 +109,14 @@ export function Character({ profile, state = 'idle', move, facing = 'right', red
       <g key={`${cycle}-${profile.avatarId}-${state}`} className="character-body" stroke="#302e46" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         {!casual && <BackDetails id={profile.avatarId}/>}
         <g className="character-legs"><path d="M94 188 L90 256 M126 188 L132 256" fill="none" stroke="#302e46" strokeWidth="24"/><path d="M94 188 L90 256 M126 188 L132 256" fill="none" stroke={design.pants} strokeWidth="19"/>
-          {profile.avatarId === 'runner' && <path d="M92 219 L90 253 M129 219 L132 253" fill="none" stroke={design.skin} strokeWidth="18"/>}
+          {['runner','vandeoun'].includes(profile.avatarId) && <path d="M92 219 L90 253 M129 219 L132 253" fill="none" stroke={design.skin} strokeWidth="18"/>}
           <path d="M90 250 Q79 248 76 263 Q83 272 100 266 L101 255 Z M132 250 Q143 248 147 263 Q140 272 123 266 L121 255 Z" fill={design.shoes}/>
+          {profile.avatarId==='bro-sna' && <path d="M79 258L98 258M124 258L144 258" fill="none" stroke="#657189" strokeWidth="2"/>}
           {design.type === 'animal' && <path d="M83 258 V265 M90 259 V266 M132 259 V266 M139 258 V265" fill="none" strokeWidth="1.5"/>}
         </g>
         <rect x="100" y="88" width="20" height="30" rx="7" fill={design.skin}/>
-        <path d="M77 108 Q110 95 143 108 L149 190 Q110 205 71 190 Z" fill={design.shirt}/>
-        {casual ? <g><path d="M89 106 Q110 124 131 106" fill="none" stroke={design.accent} strokeWidth="5"/>{profile.avatarId === 'student' && <><path d="M88 109 L98 113 L94 162 L82 159Z" fill="#ad3034"/><path d="M86 126 L97 128 M85 139 L96 141 M84 152 L94 154 M90 115 L86 158" fill="none" stroke="#fff4dc" strokeWidth="2"/></>}</g> : <Outfit id={profile.avatarId}/>}
+        <path d={profile.avatarId==='vandeoun'?"M73 108Q110 92 147 108L149 190Q110 205 71 190Z":"M77 108 Q110 95 143 108 L149 190 Q110 205 71 190 Z"} fill={design.shirt}/>
+        {casual && !['sok','sokha','buntheoun','bopha','pu-som','ming-ya','bro-sna','vandeoun'].includes(profile.avatarId) ? <g><path d="M89 106 Q110 124 131 106" fill="none" stroke={design.accent} strokeWidth="5"/>{profile.avatarId === 'student' && <><path d="M88 109 L98 113 L94 162 L82 159Z" fill="#ad3034"/><path d="M86 126 L97 128 M85 139 L96 141 M84 152 L94 154 M90 115 L86 158" fill="none" stroke="#fff4dc" strokeWidth="2"/></>}</g> : <Outfit id={profile.avatarId}/>}
         <g className="character-head"><image href={`${import.meta.env.BASE_URL}characters/heads/${profile.avatarId}.svg`} x="60" y="13" width="100" height="100" clipPath={`url(#head-${id})`}/>{casual && profile.avatarId === 'runner' && <><defs><pattern id={`krama-${id}`} width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#fff4dc"/><path d="M0 2H8M2 0V8" stroke="#ad3034" strokeWidth="3" opacity=".9"/></pattern></defs><path d="M84 48Q110 42 137 48V56Q110 50 84 56Z" fill={`url(#krama-${id})`} stroke="#302e46" strokeWidth="2"/></>}</g>
         {[0, 1].map(side => {
           const offset = side * 2;
@@ -119,7 +125,7 @@ export function Character({ profile, state = 'idle', move, facing = 'right', red
           const handTurn = posedState === 'block3' ? side === 0 ? 90 : -90 : posedState === 'reload' || posedState === 'block2' ? 180 : posedState === 'clap' ? side === 0 ? -20 : 20 : 180;
           return <g key={side} transform={`translate(${side === 0 ? 75 : 145} 117)`}><g className="limb upper-arm" style={upper}>
             <path d="M0 0 V36" strokeWidth="17"/><path d="M0 0 V36" stroke={design.skin} strokeWidth="12"/>
-            <path d="M0 0 V13" stroke={design.shirt} strokeWidth="14"/>
+            <path d={profile.avatarId==='bro-sna'?"M0 0V32":"M0 0 V13"} stroke={design.shirt} strokeWidth="14"/>{profile.avatarId==='bro-sna' && <><path d="M-6 30H6" stroke="#fffaf0" strokeWidth="3"/><circle cx="4" cy="26" r="1" fill="#b8b1a7" stroke="none"/></>}{profile.avatarId==='vandeoun' && <g fill="none" stroke={design.accent} strokeWidth="3"><path d="M-7 15Q0 18 7 15M-7 20Q0 23 7 20M7 18L13 25L10 33M7 19L16 22"/></g>}
             <g transform="translate(0 36)"><g className="limb forearm" style={lower}><path d="M0 0 V42" strokeWidth="16"/><path d="M0 0 V42" stroke={design.skin} strokeWidth="11"/>
               {design.type === 'robot' && <circle cy="0" r="7" fill={design.accent}/>}
               <g transform={`translate(0 42) rotate(${handTurn})`}><Hand skin={design.skin} type={hands}/></g>

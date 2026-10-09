@@ -1,8 +1,18 @@
 import type { AvatarId } from './avatars';
-export type CharacterDesign = { skin: string; shirt: string; pants: string; accent: string; shoes: string; type: 'human' | 'robot' | 'animal' | 'robe' | 'bird' | 'stone' };
+export type CharacterDesign = {
+ skin: string; shirt: string; pants: string; accent: string; shoes: string; type: 'human' | 'robot' | 'animal' | 'robe' | 'bird' | 'stone' };
 // The colors come directly from the original avatar drawing source.
 // All designs use the same dimensions, limb lengths, and gesture rig.
 export const CHARACTER_DESIGNS: Record<AvatarId, CharacterDesign> = {
+  'vandeoun': {skin:'#a86d49',shirt:'#a86d49',pants:'#303a56',accent:'#a92e34',shoes:'#a86d49',type:'human'},
+  'sok': {skin:'#bd825b',shirt:'#fffaf0',pants:'#253958',accent:'#344b6b',shoes:'#302e46',type:'human'},
+  'sokha': {skin:'#c68b62',shirt:'#fffaf0',pants:'#253958',accent:'#667b9a',shoes:'#302e46',type:'human'},
+  'buntheoun': {skin:'#a46b4c',shirt:'#eee1c4',pants:'#81504b',accent:'#ddb259',shoes:'#302e46',type:'human'},
+  'bopha': {skin:'#c68b62',shirt:'#de9a91',pants:'#733d51',accent:'#eac25b',shoes:'#302e46',type:'human'},
+  'pu-som': {skin:'#a36547',shirt:'#8d9c71',pants:'#645340',accent:'#ad3034',shoes:'#302e46',type:'human'},
+  'ming-ya': {skin:'#bd825b',shirt:'#b88275',pants:'#5e6c83',accent:'#5b8097',shoes:'#302e46',type:'human'},
+  'bro-sna': {skin:'#e4b795',shirt:'#39455b',pants:'#39455b',accent:'#8e3038',shoes:'#302e46',type:'human'},
+
   student: { skin: '#bd825b', shirt: '#fefaf0', pants: '#62677e', accent: '#9f86ff', shoes: '#302e46', type: 'human' },
   dancer: { skin: '#c68b62', shirt: '#b571be', pants: '#b571be', accent: '#f4c65d', shoes: '#c68b62', type: 'robe' },
   bokator: { skin: '#a36547', shirt: '#81cbb6', pants: '#f4d9b0', accent: '#db7067', shoes: '#a36547', type: 'human' },

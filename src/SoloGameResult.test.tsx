@@ -8,9 +8,9 @@ afterEach(()=>vi.unstubAllGlobals());
 it.each(['player','ai','draw'] as const)('shows the actual %s game outcome, identity, explanation and awarded score',outcome=>{
   const round=outcome==='draw'?resolveRound(1,1,'ching','ching',{equalAttacks:'draw',blocksStopWeaker:false,spendFailedAttacks:true}):resolveRound(1,1,outcome==='player'?'ching':'reload',outcome==='ai'?'ching':'reload');
   const scores={player:outcome==='player'?1:0,ai:outcome==='ai'?1:0};
-  const html=renderToStaticMarkup(<SoloGameResult round={round} game={3} name="Dara" profile={DEFAULT_PROFILE} botProfile={{avatarId:'robot',backgroundId:'mint'}} scores={scores}/>);
+  const html=renderToStaticMarkup(<SoloGameResult round={round} game={3} name="Dara" profile={DEFAULT_PROFILE} botProfile={{avatarId:'bazooka',backgroundId:'mint'}} scores={scores}/>);
   expect(html).toContain(outcome==='player'?'You win!':outcome==='ai'?'Bot wins!':'Draw!');
-  expect(html).toContain('Game 3');expect(html).toContain(outcome==='player'?'student.svg':'robot.svg');expect(html).toContain(outcome==='draw'?'Equal attacks canceled.':outcome==='player'?'Ching hit Bot while reloading.':'Ching hit Dara while reloading.');
+  expect(html).toContain('Game 3');expect(html).toContain(outcome==='player'?'sok.svg':'bazooka.svg');expect(html).toContain(outcome==='draw'?'Equal attacks canceled.':outcome==='player'?'Ching hit Bot while reloading.':'Ching hit Dara while reloading.');
   expect(html).toContain(`<b>${scores.player}</b>`);expect(html).toContain(`<b>${scores.ai}</b>`);
 });
 it('renders the winner announcement in Khmer without translating nicknames',()=>{

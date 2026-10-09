@@ -1,3 +1,4 @@
+import { CURRENT_HOME_SCENERY } from './homeScenery';
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { useLanguage } from './i18n/react';
 import { APP_VERSION } from './appInfo';
@@ -57,7 +58,7 @@ function HomeArtwork(){
   useEffect(()=>{
     let active=true;
     const ids=[...new Set(HOME_SCENES.flatMap(s=>s.characters))];
-    const sources=[...ids.map(id=>`${import.meta.env.BASE_URL}characters/heads/${id}.svg`),`${import.meta.env.BASE_URL}home/independence-monument.svg`];
+    const sources=[...ids.map(id=>`${import.meta.env.BASE_URL}characters/heads/${id}.svg`),`${import.meta.env.BASE_URL}${CURRENT_HOME_SCENERY.image}`];
     Promise.all(sources.map(src=>new Promise<void>(resolve=>{
       const image=new Image();
       // A slow decode must not leave the artwork cycle permanently gated.
@@ -85,7 +86,7 @@ function HomeArtwork(){
   },[preferences.reduced,ready,visible,busy,scene]);
   const selected=preferences.reduced?0:scene;
   return <div className="home-character-scene" role="group" aria-label={t('home.artDescription')} data-gesture-side={gesture?.side}>
-    <img className="home-monument" src={`${import.meta.env.BASE_URL}home/independence-monument.svg`} alt="" aria-hidden="true" fetchPriority="high"/>
+    <img className="home-monument" src={`${import.meta.env.BASE_URL}${CURRENT_HOME_SCENERY.image}`} alt="" aria-hidden="true" fetchPriority="high"/>
     {HOME_SCENES.map((illustration,index)=><div key={index} className={`home-scene-layer ${selected===index?'is-current':''}`} aria-hidden={selected!==index} data-scene={index}>
       {illustration.characters.map((avatarId,side)=><div className="home-playmate" key={side}><Character profile={{avatarId,backgroundId:'lavender'}} state={selected===index&&gesture?.side===side?gesture.move:illustration.poses[side]} facing={side===0?'right':'left'} reduced={preferences.reduced||!visible} casual cycle={selected===index&&gesture?.side===side?`tap-${gesture.serial}`:`home-${selected===index?scene:'hidden'}`}/></div>)}
     </div>)}
@@ -99,5 +100,5 @@ function Book(){return <svg aria-hidden="true" viewBox="0 0 32 32" width="25" he
 export function HomeScreen({onSingle,onMulti,onHelp,helpButton}:{onSingle:()=>void;onMulti:()=>void;onHelp:()=>void;helpButton:RefObject<HTMLButtonElement|null>}){
   const {t}=useLanguage();const probe=useRef<HTMLSpanElement>(null);const [largeText,setLargeText]=useState(false);
   useEffect(()=>{const observer=new ResizeObserver(()=>setLargeText((probe.current?.getBoundingClientRect().width??16)>18));if(probe.current)observer.observe(probe.current);return()=>observer.disconnect();},[]);
-  return <section className={`mobile-home designed-home ${largeText?'home-large-text':''}`}><span className="home-font-probe" ref={probe} aria-hidden="true"/><div className="home-intro"><p className="home-kicker">{t('home.classic')}</p><h1><span>{t('home.ready')}</span><span className="home-ching-line">{t('home.ching')}</span></h1><p className="home-description">{t('home.nostalgia')}</p></div><div className="home-stage"><HomeArtwork/></div><div className="home-modes"><button className="mode-button primary-mode" onClick={onSingle}><span className="mode-icon" aria-hidden="true"><SinglePlayerIcon/></span><span className="mode-copy"><strong>{t('Single Player')}</strong><span>{t('home.challenge')}</span></span><Arrow/></button><button className="mode-button secondary-mode" onClick={onMulti}><span className="mode-icon"><Friends/></span><span className="mode-copy"><strong>{t('Multiplayer')}</strong><span>{t('Play with friends')}</span></span><Arrow/></button></div><div className="home-tools"><button ref={helpButton} className="text-control" onClick={onHelp}><Book/>{t('How to play')}</button></div><footer className="home-footer"><span>{t('home.memories')}</span><span aria-label={t('Ching — Version {version}',{version:APP_VERSION})}>{t('home.version',{version:APP_VERSION})}</span></footer></section>;
+  return <section className={`mobile-home designed-home ${largeText?'home-large-text':''}`}><span className="home-font-probe" ref={probe} aria-hidden="true"/><div className="home-intro"><p className="home-kicker">{t('home.classic')}</p><h1><span>{t('home.ready')}</span><span className="home-ching-line">{t('home.ching')}</span></h1><p className="home-description">{t('home.nostalgia')}</p></div><div className="home-stage"><HomeArtwork/><p className="home-landmark-caption"><strong>{t(CURRENT_HOME_SCENERY.landmark)}</strong><span>{t(CURRENT_HOME_SCENERY.location)}</span></p></div><div className="home-modes"><button className="mode-button primary-mode" onClick={onSingle}><span className="mode-icon" aria-hidden="true"><SinglePlayerIcon/></span><span className="mode-copy"><strong>{t('Single Player')}</strong><span>{t('home.challenge')}</span></span><Arrow/></button><button className="mode-button secondary-mode" onClick={onMulti}><span className="mode-icon"><Friends/></span><span className="mode-copy"><strong>{t('Multiplayer')}</strong><span>{t('Play with friends')}</span></span><Arrow/></button></div><div className="home-tools"><button ref={helpButton} className="text-control" onClick={onHelp}><Book/>{t('How to play')}</button></div><footer className="home-footer"><span>{t('home.memories')}</span><span aria-label={t('Ching — Version {version}',{version:APP_VERSION})}>{t('home.version',{version:APP_VERSION})}</span></footer></section>;
 }

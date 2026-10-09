@@ -1,6 +1,6 @@
-export const CATEGORIES = ['All', 'Cambodian-inspired', 'Animals', 'Fun characters', 'Fantasy', 'Everyday personalities', 'Game-themed'] as const;
+export const CATEGORIES = ['All', 'Cambodia-inspired', 'Creator', 'Animals', 'Fantasy', 'Everyday personalities', 'Game-themed'] as const;
 export type Category = typeof CATEGORIES[number];
-export const AVATARS = [
+const LEGACY_AVATARS = [
   { id: 'student', name: 'Sokha Spark', category: 'Cambodian-inspired', description: 'Modern Khmer student with a crisp school shirt and a curious grin.' },
   { id: 'dancer', name: 'Malis Grace', category: 'Cambodian-inspired', description: 'Khmer dancer with a golden pointed crown and a bright dance sash.' },
   { id: 'bokator', name: 'Dara Brave', category: 'Cambodian-inspired', description: 'Bokator fighter with a coral headband and a calm, confident smile.' },
@@ -26,7 +26,59 @@ export const AVATARS = [
   { id: 'energy', name: 'Klarteang Bolt', category: 'Game-themed', description: 'Violet-haired energy fighter with a bright mint power crystal.' },
   { id: 'bazooka', name: 'Seuteang Boom', category: 'Game-themed', description: 'Grinning bazooka robot with a chunky mint cartoon launcher.' },
 ] as const;
-export type AvatarId = typeof AVATARS[number]['id'];
+const NEW_AVATARS = [
+  {
+    "id": "sok",
+    "name": "Sok",
+    "category": "Cambodia-inspired",
+    "description": "Cambodian schoolboy in a white school shirt and navy trousers."
+  },
+  {
+    "id": "sokha",
+    "name": "Sokha",
+    "category": "Cambodia-inspired",
+    "description": "Cambodian schoolgirl with a neat ponytail, white school blouse, and navy skirt."
+  },
+  {
+    "id": "buntheoun",
+    "name": "Buntheoun",
+    "category": "Cambodia-inspired",
+    "description": "Cambodian man in a traditional silk shirt and sampot with a gold sash."
+  },
+  {
+    "id": "bopha",
+    "name": "Bopha",
+    "category": "Cambodia-inspired",
+    "description": "Cambodian woman in a traditional blouse and patterned sampot with a shoulder sash."
+  },
+  {
+    "id": "pu-som",
+    "name": "Pu Som",
+    "category": "Cambodia-inspired",
+    "description": "Friendly Cambodian uncle in a farmer’s shirt, straw hat, and red krama."
+  },
+  {
+    "id": "ming-ya",
+    "name": "Ming Ya",
+    "category": "Cambodia-inspired",
+    "description": "Friendly Cambodian auntie in a farmer’s blouse, woven hat, and blue krama."
+  },
+  {
+    "id": "bro-sna",
+    "name": "Bro Sna",
+    "category": "Creator",
+    "description": "Light-skinned Cambodian young man with short hair and glasses, wearing a tailored charcoal suit, ivory shirt, burgundy tie, and polished shoes."
+  },
+  {
+    "id": "vandeoun",
+    "name": "Vandeoun",
+    "category": "Cambodia-inspired",
+    "description": "Cambodian Bokator fighter with an athletic build, traditional headband, arm cords, and a confident guard."
+  }
+] as const;
+export type AvatarId = typeof LEGACY_AVATARS[number]['id'] | typeof NEW_AVATARS[number]['id'];
+const REMOVED_IDS: readonly string[] = ["student", "dancer", "robot", "astronaut", "ninja", "pirate", "phoenix", "wizard", "spirit", "gamer", "runner"];
+export const AVATARS = [...NEW_AVATARS, ...LEGACY_AVATARS.filter(a=>!REMOVED_IDS.includes(a.id)).map(a=>({...a, name:a.id==='bazooka'?'Robot':a.name, category:a.category==='Cambodian-inspired'?'Cambodia-inspired' as const:a.category}))];
 export const BACKGROUNDS = [
   { id: 'lavender', name: 'Lavender', color: '#e4d9fa' },
   { id: 'lime', name: 'Lime', color: '#dfefb5' },
@@ -39,9 +91,9 @@ export const BACKGROUNDS = [
 ] as const;
 export type BackgroundId = typeof BACKGROUNDS[number]['id'];
 export type AvatarProfile = { avatarId: AvatarId; backgroundId: BackgroundId };
-export const DEFAULT_PROFILE: AvatarProfile = { avatarId: 'student', backgroundId: 'lavender' };
+export const DEFAULT_PROFILE: AvatarProfile = { avatarId: 'sok', backgroundId: 'lavender' };
 export const PROFILE_KEY = 'ching.avatar.v1';
-export function avatarById(id: AvatarId) { return AVATARS.find(avatar => avatar.id === id)!; }
+export function avatarById(id: AvatarId) { return AVATARS.find(avatar => avatar.id === id) ?? AVATARS[0]; }
 export function backgroundById(id: BackgroundId) { return BACKGROUNDS.find(background => background.id === id)!; }
 type StorageReader = Pick<Storage, 'getItem'>;
 type StorageWriter = Pick<Storage, 'setItem'>;
