@@ -1,0 +1,124 @@
+/* Single Player uses natural document flow. Content grows for custom values,
+   Khmer shaping, enlarged text, and the mobile keyboard. */
+.setup-app{width:100%;max-width:1000px;min-height:100svh;height:auto;padding-bottom:max(20px,env(safe-area-inset-bottom));display:block}
+.setup-app>main{display:block;min-width:0}
+.setup-app .solo-setup{width:100%;max-width:520px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto;gap:14px;padding:14px 0 0;min-width:0;min-height:0}
+.setup-app .setup-circle-selection{display:grid;grid-template-rows:auto auto;gap:8px;align-content:start;align-self:start;height:auto;min-width:0;min-height:0}
+.setup-app .setup-dual-preview{display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr);grid-template-rows:minmax(0,1fr);align-items:center;justify-items:center;height:clamp(120px,18svh,190px);min-height:0;min-width:0;background:radial-gradient(ellipse at 50% 58%,var(--soft) 0%,var(--soft) 55%,transparent 56%)}
+.setup-app .setup-dual-preview .character{display:block;width:100%;height:100%;min-width:0;min-height:0;max-width:100%;max-height:100%}
+.setup-preview-vs{font-size:.875rem;font-weight:700;line-height:1.8;white-space:nowrap;color:var(--ink)}
+.setup-app .setup-circle-matchup{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 20px;padding:0;align-items:start;min-width:0}
+.setup-circle-side{display:grid;grid-template-rows:auto auto minmax(3rem,auto) auto;gap:4px;justify-items:center;text-align:center;min-width:0}
+.setup-circle-side>span{font-size:.8125rem;line-height:1.8}
+.setup-circle-side>strong{font-size:.9375rem;line-height:1.6;overflow-wrap:anywhere;min-width:0}
+.setup-avatar-button{display:grid;place-items:center;border:0;background:none;border-radius:50%;padding:0;min-width:44px;min-height:44px}
+.setup-avatar-button .avatar-image{width:48px!important;height:48px!important;align-items:center;justify-content:center}
+.setup-avatar-button img{object-fit:contain;object-position:center}
+.setup-change-button{width:100%;max-width:180px;min-height:44px;padding:6px 10px;background:var(--soft);color:var(--accent);border:1px solid var(--line);border-radius:12px;font:inherit;font-size:.8125rem;line-height:1.8}
+@supports(grid-template-rows:subgrid){
+ .setup-app .setup-circle-matchup{grid-template-rows:48px auto auto auto}
+ .setup-circle-side{grid-row:1/5;grid-template-rows:subgrid}
+ .setup-circle-side:first-child{grid-column:1}
+ .setup-circle-side:last-child{grid-column:2}
+}
+.setup-app .setup-choices{display:grid;gap:12px;min-width:0;align-content:start;padding:0}
+.setup-app .name-field{gap:4px;font-size:.9375rem}
+.setup-app .name-field input{width:100%;min-height:44px;padding:6px 12px;scroll-margin-block:24px}
+.setup-app .setup-difficulty{display:grid;gap:4px}
+.setup-app .setup-difficulty h2{font-size:1rem;margin:0}
+.setup-app .segmented{margin:0;padding:4px}
+.setup-app .segmented button{min-height:44px;font-size:.9375rem;padding:5px 8px}
+.setup-difficulty-description{font-size:.8125rem;line-height:1.7;color:var(--muted);text-align:center;margin:0}
+.setup-app .match-options{margin:0;padding:0;min-width:0}
+.setup-app .match-options legend{font-size:1rem;margin-bottom:6px}
+.setup-app .match-option-fields,html:lang(km) .setup-app .match-option-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.setup-app .match-option-fields>div{min-width:0}
+.setup-app .match-option-fields label{font-size:.8125rem}
+.setup-app .match-option-fields :is(select,input){width:100%;min-height:44px;font-size:.875rem;padding:8px;max-width:100%}
+.setup-app .match-options .settings-summary{display:none}
+.setup-help-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:8px;margin-top:8px}
+.setup-app .setup-help-actions .settings-help{margin:0}
+.setup-app .settings-help summary{min-height:44px;font-size:.8125rem;padding:8px}
+.setup-help-actions .settings-help[open]{grid-column:1/-1}
+.setup-app .setup-rules-link{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:.8125rem;text-decoration:underline;text-underline-offset:3px}
+.setup-app .setup-rules-link svg{flex:none}
+.setup-app .setup-dock{display:grid;gap:8px;position:static;grid-column:1/-1;max-width:none;width:100%;margin:0;padding:0;background:none}
+.setup-start-summary{margin:0;text-align:center;color:var(--muted);font-size:.8125rem;line-height:1.8;overflow-wrap:anywhere}
+.setup-app .setup-dock .play-button{max-width:none;width:100%;min-height:54px;padding:8px 18px}
+.quick-character-picker .picker-layout{display:block}
+.quick-character-picker .picker-header .eyebrow{display:none}
+.quick-character-picker .collection-heading{margin-top:12px}
+.quick-character-picker{max-width:900px}
+.setup-quick-rules{display:grid;gap:12px}
+.setup-quick-rules section{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.setup-quick-rules .gesture-icon,.setup-win-mark{width:44px;height:44px;flex:none}
+.setup-win-mark{display:grid;place-items:center;font-size:1.5rem;color:var(--success)}
+.setup-quick-rules h3{font-size:1rem;margin:0}
+.setup-quick-rules p{margin:4px 0 0;font-size:.875rem}
+@media(max-width:359px){
+ .setup-app .setup-dual-preview{height:120px}
+ .setup-app .solo-setup{gap:10px}
+ .setup-app .setup-circle-matchup{column-gap:12px}
+ .setup-app .match-option-fields,html:lang(km) .setup-app .match-option-fields{grid-template-columns:minmax(0,1fr)}
+ .setup-app .setup-help-actions{grid-template-columns:minmax(0,1fr)}
+}
+@media(min-width:900px),(min-width:700px) and (max-height:550px){
+ .setup-app .solo-setup{max-width:920px;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 32px;padding-top:24px;align-items:start}
+ .setup-app .setup-circle-selection{grid-column:1;grid-row:1/3}
+ .setup-app .setup-dual-preview{height:clamp(150px,27svh,250px)}
+ .setup-app .setup-choices{grid-column:2;grid-row:1}
+ .setup-app .setup-dock{grid-column:2;grid-row:2}
+}
+
+/* One full-body matchup at every size. Scale from available width, never height. */
+.setup-app{display:block;height:auto;min-height:100svh}
+.setup-app>main{display:block}
+.setup-app .solo-setup{flex:none;grid-template-rows:auto;max-width:640px}
+.setup-app .setup-circle-selection{display:block;height:auto;align-self:start}
+.setup-app .setup-circle-matchup{container-type:inline-size;--character-height:clamp(180px,60cqw,280px);grid-template-columns:minmax(0,1fr) 38px minmax(0,1fr);grid-template-rows:var(--character-height) auto auto auto;gap:4px 4px;background:none}
+.setup-app .setup-circle-side{grid-row:1/5;grid-template-rows:subgrid}
+.setup-app .setup-circle-side:nth-child(2){grid-column:1}
+.setup-app .setup-circle-side:last-child{grid-column:3}
+.setup-wide-vs{display:block;grid-column:2;grid-row:1;align-self:center;text-align:center;font-size:.875rem;white-space:nowrap;line-height:1.8}
+.setup-app .setup-avatar-button{display:block;background:none;border-radius:0;min-width:0;min-height:0;width:100%;height:var(--character-height);padding:0}
+.setup-large-character{display:block;width:100%;height:100%;min-width:0;min-height:0}
+.setup-large-character .character{display:block;width:100%;height:100%;min-width:0;min-height:0;max-width:100%;max-height:100%}
+.setup-app .setup-circle-side>span{background:var(--soft);border-radius:8px;padding:2px 14px}
+@media(min-width:700px){
+ .setup-app{max-width:960px}
+ .setup-app .solo-setup{max-width:900px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto auto;gap:24px 28px;margin:24px auto 0;padding:24px;border:1px solid var(--line);border-radius:16px;align-items:start}
+ .setup-app .setup-circle-selection{grid-column:1;grid-row:1}
+ .setup-app .setup-choices{grid-column:2;grid-row:1;align-self:start;gap:14px}
+ .setup-app .setup-dock{grid-column:1/-1;grid-row:2;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:center;border-top:1px solid var(--line);padding-top:18px}
+ .setup-app .setup-start-summary{text-align:left}
+ .setup-app .setup-help-actions{grid-template-columns:minmax(0,1fr)}
+}
+@media(min-width:900px){.setup-app .setup-help-actions{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.setup-app .setup-circle-selection{container-type:inline-size}
+.setup-app .setup-circle-matchup{container-type:normal}
+/* Spacious desktop composition; tablet and phone sizing remains unchanged. */
+@media(min-width:1200px){
+ .setup-app{max-width:1500px;min-height:100vh;min-height:100dvh;height:auto;display:flex;flex-direction:column;padding-inline:clamp(24px,3vw,48px);padding-bottom:max(24px,env(safe-area-inset-bottom))}
+ .setup-app>main{flex:1;display:flex;flex-direction:column;justify-content:center;padding-block:24px;min-height:0}
+ .setup-app .solo-setup{width:100%;max-width:none;flex:none;margin:0 auto;padding:clamp(24px,2.5vw,40px);gap:24px clamp(28px,3vw,48px);grid-template-rows:auto auto;align-items:center}
+ .setup-app .setup-circle-matchup{--character-height:clamp(320px,60cqw,400px);grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);row-gap:8px}
+ .setup-app .setup-choices{gap:20px;align-self:center}
+ .setup-app .setup-circle-side>strong{font-size:1rem}
+ .setup-app .setup-change-button{max-width:240px;font-size:.9375rem;min-height:48px}
+ .setup-app .name-field input,.setup-app .match-option-fields :is(select,input){min-height:48px}
+ .setup-app .setup-dock{gap:clamp(28px,3vw,48px);padding-top:20px}
+ .setup-app .setup-start-summary{font-size:.9375rem}
+ .setup-app .setup-dock .play-button{min-height:60px}
+}
+.setup-matchup-title{display:none}
+/* The reference composition applies to tablets and desktops alike. */
+@media(min-width:700px){
+ .setup-app{max-width:1500px;display:block;min-height:100dvh;padding-inline:clamp(18px,3vw,48px)}
+ .setup-app>main{display:block;padding-block:20px}
+ .setup-app .solo-setup{max-width:none;margin:0 auto;padding:clamp(18px,2.5vw,40px);gap:20px clamp(20px,3vw,48px);align-items:start}
+ .setup-matchup-title{display:block;margin:0 0 16px;font-size:clamp(1.125rem,1.7vw,1.5rem);line-height:1.8}
+ .setup-app .setup-circle-matchup{--character-height:clamp(190px,65cqw,400px)}
+ .setup-app .setup-choices{align-self:start;padding-top:6px;gap:20px}
+ .setup-app .setup-help-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .setup-app .setup-dock{padding-top:20px;gap:clamp(20px,3vw,48px)}
+}

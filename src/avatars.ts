@@ -97,19 +97,21 @@ export function avatarById(id: AvatarId) { return AVATARS.find(avatar => avatar.
 export function backgroundById(id: BackgroundId) { return BACKGROUNDS.find(background => background.id === id)!; }
 type StorageReader = Pick<Storage, 'getItem'>;
 type StorageWriter = Pick<Storage, 'setItem'>;
-export function readProfile(storage: StorageReader): AvatarProfile {
+export const OPPONENT_PROFILE_KEY = "ching.opponent.v1";
+export const DEFAULT_OPPONENT_PROFILE: AvatarProfile = { avatarId: "bazooka", backgroundId: "rose" };
+export function readProfile(storage: StorageReader, key = PROFILE_KEY, fallback = DEFAULT_PROFILE): AvatarProfile {
   try {
-    const value: unknown = JSON.parse(storage.getItem(PROFILE_KEY) ?? 'null');
-    if (!value || typeof value !== 'object') return { ...DEFAULT_PROFILE };
+    const value: unknown = JSON.parse(storage.getItem(key) ?? 'null');
+    if (!value || typeof value !== 'object') return { ...fallback };
     const candidate = value as Record<string, unknown>;
     return {
-      avatarId: AVATARS.some(a => a.id === candidate.avatarId) ? candidate.avatarId as AvatarId : DEFAULT_PROFILE.avatarId,
-      backgroundId: BACKGROUNDS.some(b => b.id === candidate.backgroundId) ? candidate.backgroundId as BackgroundId : DEFAULT_PROFILE.backgroundId,
+      avatarId: AVATARS.some(a => a.id === candidate.avatarId) ? candidate.avatarId as AvatarId : fallback.avatarId,
+      backgroundId: BACKGROUNDS.some(b => b.id === candidate.backgroundId) ? candidate.backgroundId as BackgroundId : fallback.backgroundId,
     };
-  } catch { return { ...DEFAULT_PROFILE }; }
+  } catch { return { ...fallback }; }
 }
-export function saveProfile(storage: StorageWriter, profile: AvatarProfile): boolean {
-  try { storage.setItem(PROFILE_KEY, JSON.stringify(profile)); return true; } catch { return false; }
+export function saveProfile(storage: StorageWriter, profile: AvatarProfile, key = PROFILE_KEY): boolean {
+  try { storage.setItem(key, JSON.stringify(profile)); return true; } catch { return false; }
 }
 export function randomAvatar(current?: AvatarId, random: () => number = Math.random): AvatarId {
   const pool = AVATARS.filter(a => a.id !== current);

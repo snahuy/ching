@@ -1,0 +1,37 @@
+/* Home's woven strip and wordmark are the shared page identity. */
+:root{--page-title-size:2.1rem;--page-title-weight:900;--page-title-leading:1.7;--krama-height:16px}
+.page-shell{width:100%;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);background:var(--paper)}
+.page-krama{height:var(--krama-height);flex:none;width:100%;background-color:#f7e8cd;background-image:var(--krama);background-size:16px 16px;background-position:center;background-blend-mode:multiply;pointer-events:none}
+.page-shell-content{flex:1;min-width:0;display:flex;flex-direction:column}
+.page-shell-content>.app{width:100%;flex:1;min-height:0}
+.home-app::before,.home-app::after{content:none!important}
+.page-shell .app :is(.compact-header,.settings-content>header){background-image:none}
+.page-shell :is(.page-title,.setup-title h1,.flow-header h1,.room-topbar h1,.settings-content h1){font-family:'Source Sans 3','Battambang',sans-serif;font-size:var(--page-title-size);font-weight:var(--page-title-weight);line-height:var(--page-title-leading);letter-spacing:normal;margin:0;min-width:0;overflow-wrap:anywhere;color:var(--ink)}
+html:lang(km) .page-shell :is(.page-title,.setup-title h1,.flow-header h1,.room-topbar h1,.settings-content h1){font-family:'Battambang','Source Sans 3',sans-serif;letter-spacing:0}
+.page-shell .ching-wordmark{width:auto;height:auto;overflow:visible;mix-blend-mode:normal}
+.page-shell .compact-header{height:auto;min-height:72px;padding:8px 0;align-items:center}
+.page-shell .setup-title{flex:1;min-width:0;align-items:center;gap:10px}
+.page-shell :is(.back-button,.header-actions,.settings-content header>.battle-icon,.settings-content header>svg){flex:none}
+.page-shell .settings-content h1{flex:1}
+.page-shell .home-app{height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));min-height:30rem;padding-top:0;padding-bottom:8px;flex:none}
+.page-shell .setup-app{min-height:0;height:auto;display:flex;flex-direction:column;padding-bottom:12px}
+.page-shell .setup-app>main{flex:1;display:flex;flex-direction:column;padding-bottom:0}
+.page-shell .setup-app .solo-setup{flex:1;grid-template-rows:auto minmax(0,1fr) auto;align-content:start;align-items:start}
+.page-shell .setup-app .setup-dock{align-self:end}
+.page-shell .setup-app .setup-choices{align-content:start}
+.page-shell .battle-shell{height:calc(var(--battle-height) - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));padding-top:8px;padding-bottom:8px}
+.page-shell .battle-app{flex:none}
+.page-shell:has(.battle-app) .page-shell-content{justify-content:flex-start}
+.settings-page{padding:0}
+.settings-shell .settings-content{width:100%;flex:1;min-height:0;padding:16px max(18px,env(safe-area-inset-right)) 16px max(18px,env(safe-area-inset-left))}
+@media(min-width:700px){
+ :root{--page-title-size:3rem}
+ .page-shell .compact-header{min-height:88px;padding:12px 0}
+ .page-shell .setup-app .solo-setup{flex:none;grid-template-rows:auto auto}
+ .page-shell .setup-app>main{justify-content:center;padding-block:16px}
+}
+@media(max-width:359px){:root{--page-title-size:1.8rem}}
+/* Large text and short viewports expand in flow rather than clipping controls. */
+.page-shell .home-app:has(.home-large-text){height:auto;min-height:calc(100dvh - 32px)}
+/* Setup keeps its content-sized panel close to the lower border on roomy screens. */
+@media(min-width:700px){.page-shell .setup-app>main{justify-content:flex-end}}

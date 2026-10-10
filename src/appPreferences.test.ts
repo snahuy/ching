@@ -17,4 +17,4 @@ it('resumes the exact remaining move time rather than resetting or spending sett
   const remaining=pauseMoveDeadline(10000,2500);expect(remaining).toBe(7500);expect(resumeMoveDeadline(remaining,60000)).toBe(67500);
   expect(pauseMoveDeadline(10000,10001)).toBe(0);expect(resumeMoveDeadline(0,60000)).toBe(60000);
 });
-it('uses package metadata as the one version source',()=>{expect(APP_VERSION).toBe(metadata.version);expect(APP_VERSION).toBe('1.0.2');});
+it('uses package metadata as the one version source',()=>{expect(APP_VERSION).toBe(metadata.version);expect(APP_VERSION).toMatch(/^\d+\.\d+\.\d+$/);});

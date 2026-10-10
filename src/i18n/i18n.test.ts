@@ -12,7 +12,7 @@ describe('English and Khmer localization', () => {
     for (const [key, text] of Object.entries(catalogs.en)) { expect(catalogs.km[key], key).toBeTruthy(); expect(placeholders(catalogs.km[key]), key).toEqual(placeholders(text)); }
   });
   it('centralizes every static interface translation key, including accessible labels', () => {
-    for (const file of ['main.tsx', 'HomeScreen.tsx', 'BattleUI.tsx', 'SettingsPage.tsx', 'SoloGameResult.tsx', 'ActivityUI.tsx', 'activity.ts', 'roundPresentation.ts', 'CharacterSelect.tsx', 'MatchOptions.tsx', 'AvatarPicker.tsx', 'Avatar.tsx', 'Character.tsx', 'multiplayer/Multiplayer.tsx', 'i18n/react.tsx']) {
+    for (const file of ['main.tsx', 'HomeScreen.tsx', 'BattleUI.tsx', 'SettingsPage.tsx', 'SoloGameResult.tsx', 'ActivityUI.tsx', 'activity.ts', 'roundPresentation.ts', 'CharacterSelect.tsx', 'SetupRulesGuide.tsx', 'MatchOptions.tsx', 'AvatarPicker.tsx', 'Avatar.tsx', 'Character.tsx', 'multiplayer/Multiplayer.tsx', 'i18n/react.tsx']) {
       const text = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
       const ast = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
       function walk(node: ts.Node) {

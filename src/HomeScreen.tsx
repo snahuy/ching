@@ -7,8 +7,8 @@ import { useAppPreferences } from './AppPreferencesContext';
 import type { CharacterState } from './characterState';
 import { AVATARS, avatarById, type AvatarId } from './avatars';
 
-// A standalone vector wordmark: no screenshot or embedded interface artwork.
-export function ChingWordmark(){const {language}=useLanguage();return <svg className="ching-wordmark" aria-hidden="true" viewBox="0 0 220 100"><text x="6" y="67" fill="#141b4d" fontFamily={language === 'km' ? 'Battambang, sans-serif' : 'Source Sans 3, sans-serif'} fontSize="60" fontWeight="900" fontStyle="normal" letterSpacing={language === 'km' ? '0' : '-5'}>{language === 'km' ? 'ឈីង' : 'CHING'}</text></svg>;}
+// Real text shares the page-title typography; artwork contains no UI labels.
+export function ChingWordmark(){const {language}=useLanguage();return <span className="ching-wordmark page-title" aria-hidden="true">{language === 'km' ? 'ឈីង' : 'CHING'}</span>;}
 
 // Every existing avatar gets a turn, paired with a different character.
 // Shared poses and casual outfits preserve the home artwork's proportions.

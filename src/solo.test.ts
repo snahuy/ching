@@ -34,3 +34,14 @@ it.each(['player','ai'] as const)('awards %s exactly once and preserves resolved
 it('refuses to award points for a blocked or canceled move round',()=>{
   for(const ai of ['block1','ching'] as const){const round=resolveRound(1,1,'ching',ai);const s={...createSolo('easy',settings),history:[round]};expect(()=>finishSoloGame(s,settings)).toThrow('Finish a game');expect(s.progress.scores).toEqual({player:0,ai:0});}
 });
+
+it('uses the chosen cosmetic opponent across games independently of difficulty', () => {
+ const settings={roundSeconds:10,winsRequired:5};
+ const profile={avatarId:'sok',backgroundId:'mint'} as const;
+ for(const difficulty of ['easy','normal','hard'] as const){
+  const session=createSolo(difficulty,settings,profile,1000,profile);
+  expect(session.aiProfile).toEqual(profile);
+  const next=nextSoloGame({...session,phase:'intermission'},difficulty,settings,2000);
+  expect(next.aiProfile).toEqual(profile);
+ }
+});

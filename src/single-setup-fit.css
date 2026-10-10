@@ -1,0 +1,303 @@
+/* Only Single Player setup: content stays in flow, including keyboard/large-text fallback. */
+.single-setup-shell>.page-krama{height:8px}
+.single-setup-shell>.page-shell-content>.setup-app{max-width:1450px;padding:0 clamp(12px,2vw,32px) 8px;margin-inline:auto;min-height:0}
+.single-setup-shell .setup-app>.compact-header{min-height:56px;padding:4px 0}
+.single-setup-shell .setup-title h1{font-size:clamp(1.3rem,3vw,2.1rem);line-height:1.7}
+.single-setup-shell .setup-app>main{padding:4px 0 0;justify-content:center;flex:1}
+.single-setup-shell .setup-app .solo-setup{flex:none;width:100%;max-width:640px;margin:auto;grid-template-rows:auto auto auto;gap:8px;padding:0;align-items:start}
+.single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(110px,min(48vw,24dvh),230px);grid-template-rows:var(--character-height) auto auto auto;gap:2px 4px;background:none}
+.single-setup-shell .setup-app .setup-circle-side>span{padding:0 10px;font-size:.8125rem;line-height:1.7}
+.single-setup-shell .setup-app .setup-circle-side>strong{font-size:.9375rem;line-height:1.7;margin:0;align-self:center;overflow-wrap:anywhere}
+.single-setup-shell .setup-app .setup-change-button{min-height:44px;width:100%;max-width:240px;padding:4px 6px;font-size:.8125rem;line-height:1.7;margin:0}
+.single-setup-shell .setup-app .setup-choices{gap:6px;padding:0;align-self:start}
+.single-setup-shell .setup-app .name-field{gap:2px;font-size:.875rem;line-height:1.7}
+.single-setup-shell .setup-app .name-field input{min-height:44px;padding:4px 10px;font-size:1rem;scroll-margin-block:70px}
+.single-setup-shell .setup-app .setup-difficulty{gap:2px}
+.single-setup-shell .setup-app .setup-difficulty h2{font-size:.9375rem;line-height:1.7;margin:0}
+.single-setup-shell .setup-app .segmented{padding:3px}
+.single-setup-shell .setup-app .segmented button{min-height:44px;padding:3px 6px;line-height:1.7}
+.single-setup-shell .setup-app .setup-difficulty-description{font-size:.8125rem;line-height:1.7;margin:0}
+.single-setup-shell .setup-app .match-option-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.single-setup-shell .setup-app .setup-help-actions{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:4px;gap:6px}
+.single-setup-shell .setup-app .setup-dock{grid-column:1/-1;grid-row:auto;align-self:auto;padding-top:4px;gap:4px}
+.single-setup-shell .setup-app .setup-start-summary{font-size:.8125rem;line-height:1.7}
+.single-setup-shell .setup-app .setup-dock .play-button{min-height:52px;padding:6px 16px}
+.setup-secondary-actions{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:8px;align-items:center}
+.setup-settings-trigger{background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:12px;min-height:48px;padding:4px 8px;display:grid;text-align:left;line-height:1.7;font-size:.8125rem}
+.setup-settings-trigger span{color:var(--muted);font-size:.75rem}
+.single-setup-shell .setup-app .setup-timer-rules{min-height:44px;padding:4px 8px;background:var(--soft);border-radius:12px;color:var(--ink);font-size:.8125rem;line-height:1.7}
+@media(min-width:700px){
+ .single-setup-shell .setup-app>.compact-header{min-height:64px}
+ .single-setup-shell .setup-app .solo-setup{max-width:none;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto auto;border:1px solid var(--line);border-radius:16px;padding:clamp(12px,2vw,28px);gap:12px clamp(16px,3vw,40px)}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(160px,min(30vw,38dvh),380px)}
+ .single-setup-shell .setup-app .setup-matchup-title{margin:0 0 6px;font-size:1.125rem}
+ .single-setup-shell .setup-app .setup-choices{gap:12px}
+ .single-setup-shell .setup-app .setup-dock{grid-row:2;grid-template-columns:repeat(2,minmax(0,1fr));padding-top:10px}
+}
+@media(max-width:699px) and (max-height:700px){
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(100px,min(42vw,20dvh),150px)}
+ .single-setup-shell .setup-app .solo-setup{gap:4px}
+ .single-setup-shell .setup-app .setup-choices{gap:4px}
+}
+.single-setup-shell .setup-character-identity{display:grid;justify-items:center;gap:0;line-height:1.7;font-size:.875rem;align-content:center;min-width:0}
+.single-setup-shell .setup-character-identity span{font-size:.75rem;color:var(--muted)}
+.single-setup-shell .setup-character-identity strong{overflow-wrap:anywhere}
+.single-setup-shell .setup-app .setup-circle-matchup{grid-template-rows:var(--character-height) auto auto}
+.single-setup-shell .setup-app .setup-circle-side{grid-row:1/4}
+@media(max-width:699px) and (max-height:700px){
+ .single-setup-shell .setup-character-identity{display:flex;flex-wrap:wrap;justify-content:center;gap:0 5px;font-size:.875rem}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(100px,min(42vw,18dvh),140px)}
+ .single-setup-shell .setup-app .setup-dock{padding:0;gap:2px}
+}
+@media(orientation:landscape) and (max-height:600px) and (min-width:700px){
+ .single-setup-shell .setup-app .setup-matchup-title{display:none}
+ .single-setup-shell .setup-app .solo-setup{padding:8px;gap:6px 16px}
+ .single-setup-shell .setup-app .setup-choices{gap:4px}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(100px,30dvh,180px)}
+ .single-setup-shell .setup-character-identity{display:flex;flex-wrap:wrap;justify-content:center;gap:0 5px}
+ .single-setup-shell .setup-app .setup-dock{padding-top:4px}
+ .single-setup-shell .setup-app>.compact-header{min-height:48px}
+}
+@media(max-height:600px){
+ .single-setup-shell .setup-app .setup-difficulty-description{display:none}
+ .single-setup-shell .setup-app>.compact-header{min-height:48px;padding-block:2px}
+ .single-setup-shell .setup-app .setup-title h1{font-size:1.3rem}
+}
+@media(orientation:landscape) and (max-height:600px){.single-setup-shell>.page-shell-content>.setup-app{padding-bottom:4px}}
+/* Selected portraits stay visible above their role labels at every setup size. */
+.single-setup-shell .setup-character-identity{display:grid;justify-items:center;align-content:start;gap:2px}
+.single-setup-shell .setup-character-identity .avatar-image{width:44px!important;height:44px!important;border:1px solid var(--line);border-radius:50%;flex:none}
+.single-setup-shell .setup-character-identity .avatar-image img{width:100%;height:100%;object-fit:contain;display:block}
+.single-setup-shell .setup-identity-caption{display:grid;justify-items:center;gap:0;min-width:0;line-height:1.7}
+@media(max-width:699px) and (max-height:700px){
+ .single-setup-shell .setup-identity-caption{display:flex;flex-wrap:wrap;justify-content:center;gap:0 5px}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(90px,min(40vw,16dvh),120px)}
+ .single-setup-shell .setup-character-identity .avatar-image{width:36px!important;height:36px!important}
+}
+@media(max-width:699px) and (max-height:600px){
+ .single-setup-shell .setup-settings-trigger span{display:none}
+ .single-setup-shell .setup-settings-trigger{min-height:44px}
+}
+@media(orientation:landscape) and (max-height:600px){
+ .single-setup-shell .setup-identity-caption{display:flex;flex-wrap:wrap;justify-content:center;gap:0 5px}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(90px,25dvh,150px)}
+ .single-setup-shell .setup-character-identity .avatar-image{width:36px!important;height:36px!important}
+}
+@media(max-width:699px) and (max-height:600px){.single-setup-shell>.page-shell-content>.setup-app{padding-bottom:4px}}
+.single-setup-shell .setup-app .name-field input[aria-invalid="true"]{border-color:var(--primary,#aa2630);box-shadow:0 0 0 1px var(--primary,#aa2630)}
+/* Portrait-wide viewports use a taller stacked composition, without affecting phones. */
+@media(min-width:700px) and (max-aspect-ratio:9/10){
+ .single-setup-shell .setup-app>main{justify-content:flex-start;padding-top:12px}
+ .single-setup-shell .setup-app .solo-setup{max-width:960px;margin:0 auto;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto;padding:clamp(16px,2vw,28px);gap:clamp(8px,1dvh,16px)}
+ .single-setup-shell .setup-app .setup-circle-selection{grid-column:1;grid-row:1}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(220px,min(42vw,calc(100dvh - 810px)),430px);row-gap:4px}
+ .single-setup-shell .setup-app .setup-matchup-title{margin-bottom:8px}
+ .single-setup-shell .setup-app .setup-choices{grid-column:1;grid-row:2;gap:clamp(10px,1.3dvh,18px)}
+ .single-setup-shell .setup-app .setup-dock{grid-column:1;grid-row:3;grid-template-columns:minmax(0,1fr);gap:8px;padding-top:10px}
+ .single-setup-shell .setup-app .setup-start-summary{text-align:center}
+ .single-setup-shell .setup-app .setup-dock .play-button{min-height:56px}
+ .single-setup-shell .setup-app .setup-change-button{max-width:280px}
+ .single-setup-shell .setup-app .match-option-fields{gap:16px}
+}
+/* One centered help link after setup settings; preset values remain visible. */
+.single-setup-shell .setup-app .setup-help-actions{grid-template-columns:minmax(0,1fr)}
+.single-setup-shell .setup-app .custom-option{margin-top:6px}
+.single-setup-shell .setup-app .custom-option input:disabled{opacity:1;background:#f1ede5;color:var(--muted);border-color:var(--line);cursor:not-allowed}
+.single-setup-shell .setup-secondary-actions{grid-template-columns:minmax(0,1fr);gap:4px}
+@media(min-width:700px) and (max-aspect-ratio:9/10){
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(200px,min(42vw,calc(100dvh - 875px)),430px)}
+}
+@media(max-width:699px) and (max-height:850px){.single-setup-shell .setup-secondary-actions{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}}
+@media(min-width:700px) and (max-aspect-ratio:9/10){.single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(175px,min(42vw,calc(100dvh - 900px)),430px)}}
+@media(max-width:699px) and (min-height:851px){.single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(110px,min(46vw,23dvh),222px)}}
+/* Give the final action more presence by reclaiming space before the footer. */
+.single-setup-shell .setup-app .setup-dock{padding-top:0;row-gap:4px}
+.single-setup-shell .setup-app .setup-start-summary{padding-block:2px}
+.single-setup-shell .setup-app .setup-dock .play-button{min-height:60px;padding-block:8px}
+@media(max-width:699px) and (min-height:701px){.single-setup-shell .setup-app .solo-setup{row-gap:4px}}
+@media(min-width:700px){.single-setup-shell .setup-app .setup-dock{padding-top:2px}}
+@media(max-height:700px){
+ .single-setup-shell .setup-app .setup-dock .play-button{min-height:56px;padding-block:6px}
+ .single-setup-shell .setup-app .setup-dock{row-gap:2px}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(86px,min(39vw,15dvh),116px)}
+}
+@media(max-width:359px) and (max-height:600px){
+ .single-setup-shell .setup-identity-caption{display:grid;grid-template-columns:auto;line-height:1.5}
+ .single-setup-shell .setup-identity-caption strong{font-size:.8125rem}
+ .single-setup-shell .setup-app .solo-setup{row-gap:2px}
+ .single-setup-shell .setup-app .setup-circle-matchup{row-gap:0}
+}
+@media(min-width:700px) and (max-aspect-ratio:9/10) and (max-height:1100px){
+ .single-setup-shell .setup-app .solo-setup{row-gap:8px;padding-block:12px}
+}
+@media(max-width:359px) and (max-height:600px){
+ .single-setup-shell .setup-identity-caption{display:flex;flex-wrap:wrap;justify-content:center;gap:0 3px}
+ .single-setup-shell .setup-identity-caption strong{font-size:.75rem}
+ .single-setup-shell .setup-app .setup-start-summary{font-size:.75rem;line-height:1.5;padding-block:0}
+}
+@media(min-width:700px) and (max-aspect-ratio:9/10) and (max-height:1100px){.single-setup-shell .setup-app .solo-setup{padding-block:10px}}
+/* Keep the help label close to the summary without reducing its touch target. */
+.single-setup-shell .setup-app .setup-help-actions{margin-top:0}
+.single-setup-shell .setup-app .setup-help-actions .setup-rules-link{align-items:flex-end;padding:0 4px 2px;line-height:1.7}
+.single-setup-shell .setup-app .setup-help-actions .setup-rules-link svg{align-self:flex-end;margin-bottom:1px}
+.single-setup-shell .setup-app .setup-start-summary{padding-block:0}
+.single-setup-shell .setup-app .setup-dock{row-gap:2px;padding-top:0}
+.single-setup-shell .setup-app .setup-choices{margin-bottom:0}
+@media(min-width:700px) and (max-aspect-ratio:9/10){.single-setup-shell .setup-app .solo-setup{row-gap:8px}}
+/* Mobile uses the same inline setup as Pro Max; only dimensions vary. */
+@media(max-width:699px){
+ .single-setup-shell .setup-app>main{padding-top:0;justify-content:flex-start}
+ .single-setup-shell .setup-app .solo-setup{margin:auto;row-gap:2px}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(64px,min(46vw,calc(100dvh - 675px - env(safe-area-inset-top) - env(safe-area-inset-bottom))),210px);row-gap:1px}
+ .single-setup-shell .setup-app .setup-choices{gap:2px}
+ .single-setup-shell .setup-app .setup-character-identity{gap:0}
+ .single-setup-shell .setup-app .setup-identity-caption{display:grid;justify-items:center;gap:0;font-size:.8125rem;line-height:1.6}
+ .single-setup-shell .setup-app .setup-character-identity .avatar-image{width:32px!important;height:32px!important}
+ .single-setup-shell .setup-app .setup-change-button{padding:2px 4px;min-height:44px}
+ .single-setup-shell .setup-app .name-field{gap:0;line-height:1.6}
+ .single-setup-shell .setup-app .setup-difficulty{gap:0}
+ .single-setup-shell .setup-app .setup-difficulty h2{line-height:1.6}
+ .single-setup-shell .setup-app .setup-difficulty-description{line-height:1.6;font-size:.8125rem}
+ .single-setup-shell .setup-app .segmented{padding:2px}
+ .single-setup-shell .setup-app .match-options legend{margin:0;font-size:.875rem;line-height:1.6}
+ .single-setup-shell .setup-app .match-option-fields{column-gap:8px}
+ .single-setup-shell .setup-app .match-option-fields label{line-height:1.6}
+ .single-setup-shell .setup-app .custom-option{margin-top:2px;gap:0}
+ .single-setup-shell .setup-app .match-option-fields :is(select,input){padding-block:4px;min-height:44px}
+ .single-setup-shell .setup-app .setup-start-summary{font-size:.8125rem;line-height:1.6}
+ .single-setup-shell .setup-app .setup-dock .play-button{min-height:52px;padding-block:4px}
+ .single-setup-shell .setup-app .setup-dock{row-gap:2px}
+}
+@media(max-width:699px) and (max-height:750px){
+ .single-setup-shell .setup-app>.compact-header{min-height:44px;padding-block:0}
+ .single-setup-shell .setup-app .setup-title h1{font-size:1.2rem;line-height:1.7}
+ .single-setup-shell .setup-app .setup-character-identity .avatar-image{width:28px!important;height:28px!important}
+ .single-setup-shell>.page-shell-content>.setup-app{padding-bottom:4px}
+}
+/* Approved short-screen arrangement: same sections, compact labels beside controls. */
+@media(max-width:699px) and (max-height:750px){
+ .single-setup-shell .setup-app .name-field{display:grid;grid-template-columns:80px minmax(0,1fr);column-gap:6px;align-items:center}
+ .single-setup-shell .setup-app .setup-difficulty{display:grid;grid-template-columns:80px minmax(0,1fr);gap:2px 6px;align-items:center}
+ .single-setup-shell .setup-app .setup-difficulty h2{font-size:.8125rem}
+ .single-setup-shell .setup-app .setup-difficulty-description{grid-column:1/-1}
+ .single-setup-shell .setup-app .match-option-fields>div{display:grid;grid-template-columns:minmax(0,1fr) 60px;gap:0 4px;align-items:end}
+ .single-setup-shell .setup-app .match-option-fields>div>label:first-child{grid-column:1;grid-row:1}
+ .single-setup-shell .setup-app .match-option-fields select{grid-column:1;grid-row:2;padding-inline:4px;font-size:.8125rem}
+ .single-setup-shell .setup-app .custom-option{grid-column:2;grid-row:1/3;margin:0;font-size:.6875rem;line-height:1.6;gap:0;align-self:end}
+ .single-setup-shell .setup-app .custom-option input{padding-inline:4px;font-size:.875rem}
+}
+.single-setup-shell .setup-difficulty-explanation{font:inherit;font-weight:inherit;text-align:left;color:var(--ink);background:none;border:0;padding:0;min-height:44px}
+.single-setup-shell .setup-difficulty-explanation span{color:var(--accent)}
+@media(min-width:700px),(min-height:751px){.single-setup-shell .setup-difficulty-explanation{min-height:0}}
+@media(max-width:699px) and (max-height:750px){
+ .single-setup-shell .setup-app .setup-difficulty-description{display:none}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(90px,calc(100dvh - 580px - env(safe-area-inset-top) - env(safe-area-inset-bottom)),140px)}
+}
+@media(max-width:699px){
+ .single-setup-shell{--setup-top-safe:env(safe-area-inset-top,0px);--setup-bottom-safe:env(safe-area-inset-bottom,0px);padding-top:var(--setup-top-safe);padding-bottom:var(--setup-bottom-safe)}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(82px,min(46vw,calc(100dvh - 675px - var(--setup-top-safe) - var(--setup-bottom-safe))),210px)}
+}
+@media(max-width:699px) and (max-height:750px){
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(82px,calc(82px + (100dvh - 600px - var(--setup-top-safe) - var(--setup-bottom-safe)) * .2),140px)}
+}
+/* Portrait beside role/name, matching the requested identity arrangement. */
+.single-setup-shell .setup-app .setup-character-identity{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;justify-items:start;gap:8px;width:max-content;max-width:100%;justify-self:center;text-align:left}
+.single-setup-shell .setup-app .setup-character-identity .avatar-image{grid-column:1;grid-row:1;width:44px!important;height:44px!important}
+.single-setup-shell .setup-app .setup-identity-caption{grid-column:2;grid-row:1;display:grid;justify-items:start;gap:0;text-align:left;line-height:1.7;min-width:0}
+.single-setup-shell .setup-app .setup-identity-caption strong{font-size:.9375rem;overflow-wrap:anywhere}
+@media(max-width:699px) and (max-height:750px){
+ .single-setup-shell .setup-app .setup-character-identity{gap:6px}
+ .single-setup-shell .setup-app .setup-character-identity .avatar-image{width:36px!important;height:36px!important}
+ .single-setup-shell .setup-app .setup-identity-caption strong{font-size:.8125rem}
+}
+.single-setup-shell .setup-app .setup-change-button{width:auto;max-width:100%;min-width:0;min-height:44px;padding:2px 12px;justify-self:center;font-size:.8125rem;line-height:1.7;border-radius:10px}
+/* Mobile content distributes spare height above the final action, not below it. */
+@media(max-width:699px){
+ .single-setup-shell>.page-shell-content>.setup-app{padding-bottom:18px}
+ .single-setup-shell .setup-app>main{flex:1;min-height:0;display:flex;padding-top:0;justify-content:flex-start}
+ .single-setup-shell .setup-app .solo-setup{flex:1;margin:0;grid-template-rows:minmax(min-content,1fr) auto auto;align-content:start;row-gap:clamp(2px,calc((100dvh - 700px)*.025),8px)}
+ .single-setup-shell .setup-app .setup-circle-selection{align-self:stretch;display:flex;flex-direction:column;min-height:0}
+ .single-setup-shell .setup-app .setup-circle-matchup{flex:1;grid-template-rows:minmax(var(--character-height),1fr) auto auto;align-content:stretch}
+ .single-setup-shell .setup-app .setup-avatar-button{height:100%;min-height:var(--character-height);max-height:330px;align-self:center}
+ .single-setup-shell .setup-app .setup-circle-side{align-self:stretch}
+ .single-setup-shell .setup-app .setup-dock{align-self:end}
+}
+@media(max-width:699px){
+ .single-setup-shell .setup-app .solo-setup{grid-template-rows:minmax(0,1fr) auto auto}
+ .single-setup-shell .setup-app .setup-circle-selection{min-height:calc(var(--character-height,90px) + 92px)}
+ .single-setup-shell .setup-app .setup-circle-matchup{grid-template-rows:minmax(0,1fr) auto auto;min-height:0}
+ .single-setup-shell .setup-app .setup-avatar-button{min-height:0}
+ .single-setup-shell .setup-app .setup-circle-selection{min-height:0}
+}
+@media(max-width:699px){
+ .single-setup-shell>.page-shell-content>.setup-app{height:calc(100dvh - 16px - var(--setup-top-safe) - var(--setup-bottom-safe));flex:none}
+ .single-setup-shell .setup-app>main{min-height:0;flex:1 1 0}
+ .single-setup-shell .setup-app .solo-setup{flex:1 1 0;min-height:0}
+}
+/* Keyboard-sized or extreme-height viewports return to natural scrolling flow. */
+@media(max-width:699px) and (max-height:500px){
+ .single-setup-shell>.page-shell-content>.setup-app{height:auto;min-height:calc(100dvh - 16px - var(--setup-top-safe) - var(--setup-bottom-safe));flex:1}
+ .single-setup-shell .setup-app>main,.single-setup-shell .setup-app .solo-setup{flex:none}
+ .single-setup-shell .setup-app .solo-setup{grid-template-rows:auto auto auto}
+ .single-setup-shell .setup-app .setup-circle-matchup{grid-template-rows:var(--character-height) auto auto}
+ .single-setup-shell .setup-app .setup-avatar-button{height:var(--character-height)}
+}
+/* Below 400px, four side-by-side controls cannot fit readable labels. */
+@media(max-width:399px){
+ .single-setup-shell .setup-app .match-option-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto 44px auto 44px;gap:2px 8px;align-items:stretch}
+ .single-setup-shell .setup-app .match-option-fields>div{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:subgrid;grid-row:1/5;gap:2px 0;min-width:0}
+ .single-setup-shell .setup-app .match-option-fields>div:first-child{grid-column:1}
+ .single-setup-shell .setup-app .match-option-fields>div:last-child{grid-column:2}
+ .single-setup-shell .setup-app .match-option-fields>div>label:first-child{grid-column:1;grid-row:1;align-self:end}
+ .single-setup-shell .setup-app .match-option-fields select{grid-column:1;grid-row:2;width:100%;height:44px;min-height:44px;font-size:.8125rem}
+ .single-setup-shell .setup-app .custom-option{display:grid;grid-template-rows:subgrid;grid-column:1;grid-row:3/5;margin:0;font-size:.8125rem;line-height:1.6;align-self:stretch;gap:2px}
+ .single-setup-shell .setup-app .custom-option input{grid-row:2;width:100%;height:44px;min-height:44px}
+ .single-setup-shell .setup-difficulty-explanation{display:flex;align-items:center;gap:3px;width:100%}
+ .single-setup-shell .setup-difficulty-explanation span{flex:none}
+ .single-setup-shell .setup-app .setup-difficulty h2{min-width:0}
+}
+@media(max-width:399px){
+ .single-setup-shell .setup-app .solo-setup{grid-template-rows:minmax(154px,1fr) auto auto}
+ .single-setup-shell .setup-app .match-options legend{padding-inline:0}
+ .single-setup-shell .setup-app .setup-difficulty-explanation{position:relative;padding-right:14px;display:block}
+ .single-setup-shell .setup-difficulty-explanation span{position:absolute;right:0;top:50%;transform:translateY(-50%)}
+}
+/* Extremely short narrow screens keep every control in normal scrolling flow. */
+@media(max-width:399px) and (max-height:620px){
+ .single-setup-shell>.page-shell-content>.setup-app{height:auto;min-height:calc(100dvh - 16px - var(--setup-top-safe) - var(--setup-bottom-safe));flex:1}
+ .single-setup-shell .setup-app>main,.single-setup-shell .setup-app .solo-setup{flex:none}
+ .single-setup-shell .setup-app .solo-setup{grid-template-rows:auto auto auto}
+ .single-setup-shell .setup-app .setup-circle-selection{height:154px;min-height:154px}
+}
+/* Home is the source of truth for the woven strips and page-title type. */
+.single-setup-shell>.page-krama{height:var(--krama-height)}
+.single-setup-shell .setup-title h1{font-size:var(--page-title-size);font-weight:var(--page-title-weight);line-height:var(--page-title-leading)}
+@media(max-width:699px){
+ .single-setup-shell>.page-shell-content>.setup-app{height:calc(100dvh - 2 * var(--krama-height) - var(--setup-top-safe) - var(--setup-bottom-safe))}
+}
+@media(max-width:399px) and (max-height:620px), (max-width:699px) and (max-height:500px){
+ .single-setup-shell>.page-shell-content>.setup-app{height:auto;min-height:calc(100dvh - 2 * var(--krama-height) - var(--setup-top-safe) - var(--setup-bottom-safe))}
+}
+html .single-setup-shell .setup-app .setup-title h1{font-size:var(--page-title-size);font-weight:var(--page-title-weight);line-height:var(--page-title-leading)}
+/* Tablets use spare viewport height for the matchup instead of empty outer space. */
+@media(min-width:700px) and (max-width:1199px){
+ .single-setup-shell .setup-app>main{justify-content:center}
+ .single-setup-shell .setup-app .solo-setup{max-width:1100px;margin:auto;row-gap:clamp(12px,1.5dvh,20px);padding:clamp(18px,2.5vw,28px)}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(190px,min(36vw,46dvh),430px)}
+ .single-setup-shell .setup-app .setup-choices{gap:clamp(12px,1.6dvh,20px)}
+}
+@media(min-width:700px) and (max-width:1199px) and (max-aspect-ratio:9/10){
+ .single-setup-shell .setup-app>main{justify-content:flex-start;padding-top:12px}
+ .single-setup-shell .setup-app .solo-setup{margin:0 auto;row-gap:clamp(8px,1.2dvh,18px)}
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(175px,min(46vw,calc(100dvh - 820px)),500px)}
+ .single-setup-shell .setup-app .setup-choices{gap:clamp(8px,1.2dvh,16px)}
+}
+@media(min-width:700px) and (max-width:1199px) and (max-aspect-ratio:9/10){
+ .single-setup-shell .setup-app .setup-circle-matchup{--character-height:clamp(165px,min(46vw,calc(100dvh - 885px)),500px)}
+}
+@media(min-width:700px) and (max-width:1199px) and (max-aspect-ratio:9/10) and (max-height:1100px){
+ .single-setup-shell .setup-app .solo-setup{row-gap:8px;padding:16px}
+ .single-setup-shell .setup-app .setup-choices{gap:8px}
+}
+.single-setup-shell .setup-app .name-field{font-weight:700}
+.single-setup-shell .setup-app .name-field input{font-weight:400}

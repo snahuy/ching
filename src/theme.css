@@ -1,0 +1,89 @@
+/* Shared Cambodian theme, sampled from the existing home screen.
+   Cosmetics are drawn separately: these tokens only style interface surfaces. */
+:root {
+  --ink:#141b4d; --paper:#fffdf3; --accent:#ac292e; --accent-dark:#7b1d22;
+  --surface:#fffdf5; --soft:#f9e3de; --accent-soft:#f3d3cb;
+  --accent-border:#ecc4bd; --line:#bec2d6; --muted:#646a86;
+  --defend-soft:#edf0f7; --success:#426747; --success-soft:#e3eddf;
+  --warning:#856021; --warning-soft:#faedcf; --error:#96262e;
+  --purple:var(--accent); --lime:var(--success-soft);
+  --primary-fill:linear-gradient(120deg,#b52d34,#a0242b);
+  --krama:repeating-linear-gradient(90deg,#ad3034 0 4px,transparent 4px 8px,#142451 8px 12px,transparent 12px 16px),repeating-linear-gradient(0deg,#ad303455 0 4px,transparent 4px 8px,#14245166 8px 12px,transparent 12px 16px),repeating-linear-gradient(90deg,#fff9e880 0 1px,transparent 1px 4px);
+}
+body{color:var(--ink);background:var(--paper)}
+.app{--ink:#141b4d;--paper:#fffdf3;--accent:#ac292e}
+.app :is(button,input,select,textarea,summary):focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.app :is(input[type=checkbox],input[type=range]){accent-color:var(--accent)}
+.app :is(input:not([type=checkbox]):not([type=range]),select,textarea){background:var(--surface);color:var(--ink);border-color:var(--line)}
+.app input::placeholder{color:var(--muted);opacity:1}
+.app :is(.play-button,.battle-lock-button){background:var(--primary-fill);color:white;border-radius:19px;box-shadow:0 5px 0 var(--accent-dark)}
+.app .play-button:hover:enabled{box-shadow:0 5px 0 var(--accent-dark)}
+.app :is(.play-button,.battle-lock-button):active:enabled{transform:translateY(2px);box-shadow:0 2px 0 var(--accent-dark)}
+.app :is(.play-button,.battle-lock-button):disabled{background:#e3dbd6;color:#686573;box-shadow:none}
+.app :is(.room-secondary,.random-avatar,.target-button,.secondary-mode){background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:none}
+.app :is(.room-secondary,.random-avatar,.target-button):hover:enabled{background:var(--soft);border-color:var(--accent)}
+.app :is(.back-button,.battle-icon,.icon-button,.sheet-action){background:var(--soft);color:var(--accent);border-radius:12px;border-color:var(--accent-border)}
+.app :is(.segmented,.language-toggle,.settings-choices){background:var(--soft);border-color:var(--accent-border)}
+.app :is(.segmented button.active,.language-toggle button[aria-pressed=true],.settings-choices button[aria-pressed=true],.avatar-filters button.active){background:var(--primary-fill);color:white;border-color:var(--accent)}
+.app :is(.avatar-option.selected,.character-rail>button.chosen,.target-button.selected){border-color:var(--accent);background:var(--soft);box-shadow:0 0 0 1px var(--accent)}
+.app :is(.avatar-check,.character-rail>button>b){background:var(--accent);color:white}
+.app .avatar-option:hover{background:var(--soft)}
+.app :is(.avatar-preview,.entry-character,.room-invite,.room-results,.guest-settings){background:var(--surface);border-color:var(--line)}
+.app :is(.fullbody-preview,.setup-preview,.stage-disc){background:radial-gradient(ellipse at 50% 65%,#f9e3de 0%,#f9e3de 49%,transparent 50%);border-color:var(--accent-border)}
+.app .character-rail>button{background:var(--surface);border-color:var(--line)}
+.app :is(.picker-footer,.setup-dock){background:var(--paper)}
+.app :is(.avatar-dialog,.help-dialog,.end-card,.battle-sheet){background:var(--paper);color:var(--ink);border:1px solid var(--line);box-shadow:0 8px 30px #141b4d20}
+.app :is(.avatar-dialog,.help-dialog,.end-card){border-radius:22px}
+.app :is(.avatar-dialog,.help-dialog,.end-card,.battle-sheet)::backdrop{background:#141b4d70}
+.app:not(.home-app) .compact-header,.app .settings-content>header{background-image:var(--krama);background-size:16px 4px;background-repeat:repeat-x;background-position:center bottom}
+.app :is(.avatar-dialog,.help-dialog,.end-card,.battle-sheet){background-image:var(--krama);background-size:16px 5px;background-repeat:repeat-x;background-position:center top}
+.app :is(.settings-notice,.settings-help,.solo-match-bar,.sheet-action,.activity-bar>button,.reaction-picker button){background:var(--soft);color:var(--ink)}
+.app :is(.settings-summary,.timeout-note,.guest-note,.preview-text p,.entry-note,.room-invite p,.collection-heading){color:var(--muted)}
+.app :is(.room-error,.history-eliminations){color:var(--error)}
+.app :is(.connection-banner,.spectator-banner){background:var(--warning-soft);color:var(--warning);border-color:#dbc496}
+.app :is(.mp-player-status.is-ready,.event-blocked){color:var(--success)}
+.app .ready-button.is-ready{background:var(--success-soft);color:var(--success);box-shadow:none;border:1px solid #b1c7ad}
+.app .mp-fighter{background:var(--surface);border:1px solid var(--line)}
+.app .mp-fighter.is-you{background:var(--soft)}
+.app :is(.mp-fighter.is-target,.opponent-chip.is-target){border-color:var(--accent);background:var(--soft);box-shadow:0 0 0 1px var(--accent)}
+.app :is(.mp-fighter.is-eliminated,.opponent-chip.is-eliminated){background:#e9e6df;color:var(--muted)}
+.app :is(.match-clock,.battle-timer){background:var(--soft);color:var(--accent)}
+.app :is(.battle-scoreline>span,.battle-scoreline>button,.match-scoreboard>div>span){background:var(--surface);color:var(--ink)}
+.app .match-scoreboard .score-champion{background:var(--success-soft);color:var(--success)}
+.app .duel-arena{background:radial-gradient(ellipse at 50% 65%,#f9e3de66,transparent 72%)}
+.app .battle-fighter.is-target .battle-fighter-heading{background:var(--soft);color:var(--accent)}
+.app .opponent-chip{background:var(--surface);border-color:var(--line)}
+.app .opponent-chip.is-preview{background:var(--defend-soft)}
+.app :is(.battle-revealed-move,.move-label){background:var(--soft);color:var(--ink)}
+.app .battle-revealed-move:empty{background:none}
+.app :is(.battle-move,.move-card){border:2px solid var(--line);background:var(--surface);box-shadow:0 2px 0 #141b4d12}
+.app :is(.battle-move.attack,.move-card.attack){background:#fbeee8;border-color:var(--accent-border)}
+.app :is(.battle-move.block,.move-card.block){background:var(--defend-soft);border-color:var(--line)}
+.app :is(.battle-move.reload,.move-card.reload){background:var(--success-soft);border-color:#b1c7ad}
+.app :is(.battle-move.selected,.move-card.selected){background:var(--accent-soft);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.app .battle-move.locked{background:var(--primary-fill);border-color:var(--accent);color:white}
+.app .battle-move.locked .battle-move-cost{color:white}
+.app .battle-move.unaffordable{background:#e9e6df;border-color:#ddd8cd;color:#77717d;box-shadow:none}
+.app .battle-move.waiting{background:#eee9e2;box-shadow:none}
+.app .battle-move:not(.unaffordable):not(:disabled):hover{border-color:var(--accent)}
+.app .reaction-bubble{background:var(--surface);border-color:var(--accent-border)}
+.app .reaction-bubble:after{background:var(--surface);border-color:var(--accent-border)}
+.app :is(.activity-game,.activity-match,.opponent-revealed-move,.win-message,.end-star){color:var(--accent)}
+.app .solo-result-card{background:#fffdf5f5;border-color:var(--accent);box-shadow:0 7px 24px #141b4d22}
+.app :is(.solo-result-card h2,.solo-result-score b){color:var(--accent)}
+.app :is(.battle-help-moves>div,.help-moves>div){background:var(--surface);border-radius:12px}
+.app :is(.help-moves strong>span,.help-moves small,.room-entry h1 span,.room-topbar h1 span,.picker-header h2 span){color:var(--accent)}
+.app .room-history .event-canceled{color:var(--muted)}
+.app .room-history .event-hit{color:var(--error)}
+.app .private-room-button{background:var(--surface);border-color:var(--line)}
+.app .private-room-button:hover{background:var(--soft)}
+
+.app:not(.home-app) .primary-mode{background:var(--primary-fill);box-shadow:0 5px 0 var(--accent-dark)}
+.app:not(.home-app) .secondary-mode{background:var(--surface);border:1px solid var(--line)}
+.app .settings-help{border-radius:12px;padding-inline:12px}
+.app .activity-bar>button:disabled{background:#eee9e2;color:var(--muted)}
+/* A thin woven edge stays within the battle's existing safe-area padding. */
+.battle-shell{background-image:var(--krama),var(--krama);background-size:16px 3px,16px 3px;background-repeat:repeat-x;background-position:center top,center bottom}
+
+.app .result-avatars .winner .result-character{background:var(--soft)}
+.app .end-card>.how-button{display:inline-flex;align-items:center;justify-content:center;margin-inline:8px;padding-inline:8px;min-height:44px}

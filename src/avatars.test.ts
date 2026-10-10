@@ -1,7 +1,7 @@
 import {readFileSync} from 'node:fs';
 import {catalogs} from './i18n/core';
 import { describe, expect, it } from 'vitest';
-import { AVATARS, BACKGROUNDS, CATEGORIES, DEFAULT_PROFILE, PROFILE_KEY, randomAvatar, readProfile, saveProfile } from './avatars';
+import { OPPONENT_PROFILE_KEY, DEFAULT_OPPONENT_PROFILE, AVATARS, BACKGROUNDS, CATEGORIES, DEFAULT_PROFILE, PROFILE_KEY, randomAvatar, readProfile, saveProfile } from './avatars';
 describe('avatar collection and guest profiles', () => {
   it('has the revised unique roster, populated categories, and eight colors', () => {
     expect(AVATARS).toHaveLength(21);
@@ -42,3 +42,19 @@ it('keeps requested names and the renamed Robot ID',()=>{expect(AVATARS.find(a=>
 it('provides local profile and character art plus bilingual descriptions for the selectable roster',()=>{for(const a of AVATARS){for(const folder of ['avatars','characters/heads'])expect(readFileSync(new URL(`../public/${folder}/${a.id}.svg`,import.meta.url),'utf8')).toContain('<svg');expect(catalogs.en[a.description]).toBeTruthy();expect(catalogs.km[a.description]).toBeTruthy();}});
 
 it('includes Vandeoun in Cambodia-inspired and preserves Bro Sna as Creator',()=>{expect(AVATARS.find(a=>a.id==='vandeoun')).toMatchObject({name:'Vandeoun',category:'Cambodia-inspired'});expect(AVATARS.find(a=>a.id==='bro-sna')).toMatchObject({name:'Bro Sna',category:'Creator'});});
+
+it('persists opponent separately, permits matching characters, and repairs removed opponent IDs', () => {
+ const values = new Map<string,string>();
+ const storage = {getItem:(key:string)=>values.get(key)??null,setItem:(key:string,value:string)=>{values.set(key,value);}};
+ const player = {avatarId:'sok',backgroundId:'mint'} as const;
+ const opponent = {avatarId:'sok',backgroundId:'rose'} as const;
+ saveProfile(storage,player); saveProfile(storage,opponent,OPPONENT_PROFILE_KEY);
+ expect(readProfile(storage)).toEqual(player);
+ expect(readProfile(storage,OPPONENT_PROFILE_KEY,DEFAULT_OPPONENT_PROFILE)).toEqual(opponent);
+ saveProfile(storage,{avatarId:'dragon',backgroundId:'rose'},OPPONENT_PROFILE_KEY);
+ expect(readProfile(storage)).toEqual(player);
+ values.set(OPPONENT_PROFILE_KEY,JSON.stringify({avatarId:'student',backgroundId:'rose'}));
+ expect(readProfile(storage,OPPONENT_PROFILE_KEY,DEFAULT_OPPONENT_PROFILE).avatarId).toBe('bazooka');
+ values.set(OPPONENT_PROFILE_KEY,'bad json');
+ expect(readProfile(storage,OPPONENT_PROFILE_KEY,DEFAULT_OPPONENT_PROFILE)).toEqual(DEFAULT_OPPONENT_PROFILE);
+});

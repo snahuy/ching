@@ -4,8 +4,8 @@ import { awardGame, type MatchProgress, type MatchSettings } from './match';
 import type { MoveId, Round } from './rules';
 import type { Phase } from './characterState';
 export type SoloSession = { playerAmmo: number; aiAmmo: number; history: Round[]; botHistory: Round[]; lockedAI: MoveId; aiProfile: AvatarProfile; phase: Phase; chosen?: MoveId; count: number; deadline: number; gameNumber: number; progress: MatchProgress; timedOut: boolean };
-export function createSolo(difficulty: Difficulty, settings: MatchSettings, player = DEFAULT_PROFILE, now = Date.now()): SoloSession {
-  return { playerAmmo: 0, aiAmmo: 0, history: [], botHistory: [], lockedAI: chooseAI({ playerAmmo: 0, aiAmmo: 0, history: [] }, difficulty), aiProfile: randomOpponent(player.avatarId), phase: 'choose', count: 3, deadline: now + settings.roundSeconds * 1000, gameNumber: 1, progress: { scores: { player: 0, ai: 0 }, completedGame: 0, championId: null }, timedOut: false };
+export function createSolo(difficulty: Difficulty, settings: MatchSettings, player = DEFAULT_PROFILE, now = Date.now(), opponent?: AvatarProfile): SoloSession {
+  return { playerAmmo: 0, aiAmmo: 0, history: [], botHistory: [], lockedAI: chooseAI({ playerAmmo: 0, aiAmmo: 0, history: [] }, difficulty), aiProfile: opponent ? { ...opponent } : randomOpponent(player.avatarId), phase: 'choose', count: 3, deadline: now + settings.roundSeconds * 1000, gameNumber: 1, progress: { scores: { player: 0, ai: 0 }, completedGame: 0, championId: null }, timedOut: false };
 }
 export function finishSoloGame(session: SoloSession, settings: MatchSettings): SoloSession {
   const outcome = session.history.at(-1)?.outcome;
