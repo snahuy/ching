@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4 — Official app icon added
+
+- Added the official Ching app icon for iPhone, iPad, Android, and desktop browsers.
+- Added browser favicons and Android maskable icons generated from the original artwork.
+- Added standalone PWA installation metadata with the existing navy and cream colors.
+- Preserved existing page layouts, artwork, and gameplay; no offline caching was introduced.
 ## 1.0.3 — Single Player setup updates
 
 Updated Single Player setup with responsive phone and tablet spacing, aligned match settings, and headers matching the Home theme.
