@@ -53,6 +53,8 @@ For a custom frontend domain, add its exact origin to `ALLOWED_ORIGINS`, comma-s
 
 ## 3. Connect and redeploy Vercel
 
+Version 1.0.6 bundles the public default `wss://ching-multiplayer.onrender.com/socket`. This is not a secret. A missing or blank Vercel variable uses that default; local development still uses the local proxy. For a different backend, override it as follows:
+
 1. In your existing Vercel project, add this **Production** environment variable:
    `VITE_MULTIPLAYER_URL=wss://YOUR-ASSIGNED-HOST.onrender.com/socket`
 2. Keep build `npm run build`, output `dist`, and the existing Vite project settings.

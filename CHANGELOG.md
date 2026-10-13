@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.6 — Multiplayer connection configuration fix
+
+- Added the confirmed public Render WebSocket address as the production default when the Vercel variable is missing or blank.
+- Preserved explicit endpoint overrides and the local development proxy.
+- Verified the live backend health and WebSocket handshake from the Vercel origin; a complete deployed match remains to be tested.
+
 ## 1.0.5 — Internet multiplayer backend integration
 
 - Added a configurable hosted WebSocket endpoint for the Vercel frontend.

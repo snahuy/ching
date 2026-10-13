@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ClientMessage, PublicRoom, RoomSession, ServerMessage } from './protocol';
 import { multiplayerEndpoint } from './endpoint';
+import { DEFAULT_MULTIPLAYER_URL } from './deployment';
 const SESSION_KEY = 'ching.room.session.v1';
 function storedSession(): RoomSession | null {
   try {
@@ -20,7 +21,7 @@ export function useRoom() {
   useEffect(() => {
     let disposed = false, retry: ReturnType<typeof setTimeout> | undefined, attempts = 0, takenOver = false;
     let endpoint: string;
-    try { endpoint = multiplayerEndpoint(import.meta.env.VITE_MULTIPLAYER_URL, location, import.meta.env.DEV); }
+    try { endpoint = multiplayerEndpoint(import.meta.env.VITE_MULTIPLAYER_URL, location, import.meta.env.DEV, DEFAULT_MULTIPLAYER_URL); }
     catch (cause) { setConnection('disconnected'); setError((cause as Error).message); return; }
     function connect() {
       if (disposed) return;

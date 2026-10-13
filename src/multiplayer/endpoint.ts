@@ -1,4 +1,5 @@
-export function multiplayerEndpoint(configured: string | undefined, page: Pick<Location, 'protocol' | 'host'>, development: boolean): string {
+export function multiplayerEndpoint(configured: string | undefined, page: Pick<Location, 'protocol' | 'host'>, development: boolean, productionDefault?: string): string {
+  configured = configured?.trim() || (!development ? productionDefault : undefined);
   if (!configured?.trim()) {
     if (development) return `${page.protocol === 'https:' ? 'wss:' : 'ws:'}//${page.host}/socket`;
     throw new Error('Multiplayer is not configured. Set VITE_MULTIPLAYER_URL and redeploy the frontend.');
