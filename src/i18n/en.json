@@ -597,5 +597,13 @@
   "solo.opponentFinalScore": "First to {target} wins · {name} {player} — {opponent} {rival}",
   "Choose your matchup": "Choose your matchup",
   "Balances moves using ammo.": "Balances moves using ammo.",
-  "Adapts to your recent moves.": "Adapts to your recent moves."
+  "Adapts to your recent moves.": "Adapts to your recent moves.",
+  "Multiplayer is not configured. Set VITE_MULTIPLAYER_URL and redeploy the frontend.": "Multiplayer is not configured. Set VITE_MULTIPLAYER_URL and redeploy the frontend.",
+  "The multiplayer server URL is invalid. Use a secure wss:// endpoint.": "The multiplayer server URL is invalid. Use a secure wss:// endpoint.",
+  "Cannot reach the room server. Reconnecting automatically…": "Cannot reach the room server. Reconnecting automatically…",
+  "The room server sent an invalid response.": "The room server sent an invalid response.",
+  "Room storage unavailable. Reconnect after the server recovers.": "Room storage unavailable. Reconnect after the server recovers.",
+  "Invalid room snapshot.": "Invalid room snapshot.",
+  "Disconnected from room server.": "Disconnected from room server.",
+  "Choose one room storage backend.": "Choose one room storage backend."
 }

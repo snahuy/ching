@@ -2,8 +2,83 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { WebSocket } from 'ws';
 import { createGameServer } from './http';
 import { DEFAULT_PROFILE } from '../src/avatars';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { RoomStorage } from './storage';
 import type { ClientMessage, ServerMessage, PublicRoom, RoomSession } from '../src/multiplayer/protocol';
 const apps: ReturnType<typeof createGameServer>[] = [];
+it('serializes asynchronous durable commits before sending sessions, private moves or results', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'ching-async-db-'));
+  const database = new RoomStorage(join(dir, 'rooms.sqlite'));
+  let release: (() => void) | undefined, writes = 0;
+  const app = createGameServer({ remoteStorage: {
+    async save(payload) {
+      if (++writes === 1) await new Promise<void>(resolve => { release = resolve; });
+      else await new Promise(resolve => setTimeout(resolve, 15));
+      database.save(payload);
+    }, async close() { database.close(); },
+  } });
+  apps.push(app); await new Promise<void>(resolve => app.server.listen(0, '127.0.0.1', resolve));
+  const address = app.server.address(); if (!address || typeof address === 'string') throw Error('No port');
+  const url = `ws://127.0.0.1:${address.port}/socket`, a = await client(url), b = await client(url);
+  a.send({ type: 'create', nickname: 'Async host', profile: DEFAULT_PROFILE });
+  await a.wait(() => release ? true : undefined);
+  expect(a.messages).toHaveLength(0); expect(database.load()).toBeUndefined();
+  release!(); const host = await a.session(); expect(database.load()).toContain(host.playerId);
+  b.send({ type: 'join', code: host.code, nickname: 'Async guest', profile: DEFAULT_PROFILE }); const guest = await b.session();
+  a.send({ type: 'ready', ready: true }); b.send({ type: 'ready', ready: true }); await a.state(r => r.players.length === 2 && r.players.every(p => p.ready));
+  a.send({ type: 'start' }); const round = await a.state(r => r.phase === 'choosing');
+  a.send({ type: 'lock', roundId: round.roundId, move: 'reload' });
+  const privateView = await b.state(r => r.players[0].locked); expect(privateView.selfAction).toBeNull();
+  b.send({ type: 'lock', roundId: round.roundId, move: 'reload' });
+  const resolved = await a.state(r => r.phase === 'reveal');
+  expect(resolved.history).toHaveLength(1); expect(resolved.players.every(p => p.ammo === 1)).toBe(true);
+  const committed = JSON.parse(database.load()!).rooms[0]; expect(committed.phase).toBe('reveal'); expect(committed.history).toHaveLength(1);
+  expect(committed.members.some(([id]: [string]) => id === guest.playerId)).toBe(true);
+  await app.close(); apps.pop(); rmSync(dir, { recursive: true });
+});
+it('fails closed when durable storage cannot commit, without acknowledging a room', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'ching-storage-fail-'));
+  const app = createGameServer({ databasePath: join(dir, 'rooms.sqlite') });
+  apps.push(app);
+  await new Promise<void>(resolve => app.server.listen(0, '127.0.0.1', resolve));
+  const address = app.server.address(); if (!address || typeof address === 'string') throw Error('No port');
+  const c = await client(`ws://127.0.0.1:${address.port}/socket`);
+  vi.spyOn(RoomStorage.prototype, 'save').mockImplementation(() => { throw Error('Disk full'); });
+  c.send({ type: 'create', nickname: 'Host', profile: DEFAULT_PROFILE });
+  await new Promise<void>(resolve => c.socket.once('close', () => resolve()));
+  expect(c.messages.some(m => m.type === 'session' || m.type === 'state')).toBe(false);
+  expect((await fetch(`http://127.0.0.1:${address.port}/health`)).status).toBe(503);
+  await app.close(); apps.pop(); rmSync(dir, { recursive: true });
+});
+it('persists real socket sessions and a hidden submission across server replacement', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'ching-socket-db-'));
+  const databasePath = join(dir, 'rooms.sqlite');
+  async function launch() {
+    const app = createGameServer({ databasePath });
+    await new Promise<void>(resolve => app.server.listen(0, '127.0.0.1', resolve));
+    const address = app.server.address(); if (!address || typeof address === 'string') throw Error('No port');
+    return { app, url: `ws://127.0.0.1:${address.port}/socket` };
+  }
+  let running = await launch();
+  const a = await client(running.url), b = await client(running.url);
+  a.send({ type: 'create', nickname: 'Host', profile: DEFAULT_PROFILE }); const host = await a.session();
+  b.send({ type: 'join', code: host.code, nickname: 'Guest', profile: DEFAULT_PROFILE }); const guest = await b.session();
+  a.send({ type: 'ready', ready: true }); b.send({ type: 'ready', ready: true }); await a.state(r => r.players.length === 2 && r.players.every(p => p.ready));
+  a.send({ type: 'start' }); const first = await a.state(r => r.phase === 'choosing');
+  a.send({ type: 'lock', roundId: first.roundId, move: 'reload' }); await b.state(r => r.players[0].locked);
+  await running.app.close(); running = await launch(); apps.push(running.app);
+  const ar = await client(running.url), br = await client(running.url);
+  ar.send({ type: 'resume', code: host.code, token: host.token }); br.send({ type: 'resume', code: guest.code, token: guest.token });
+  expect((await ar.session()).playerId).toBe(host.playerId);
+  const restored = await br.state(r => r.players.every(p => p.connected));
+  expect(restored.players).toHaveLength(2); expect(restored.roundId).toBe(first.roundId); expect(restored.phaseEndsAt).toBe(first.phaseEndsAt);
+  expect(restored.selfAction).toBeNull(); expect(restored.history).toHaveLength(0);
+  br.send({ type: 'lock', roundId: first.roundId, move: 'reload' });
+  const reveal = await br.state(r => r.phase === 'reveal'); expect(reveal.players.every(p => p.ammo === 1)).toBe(true);
+  await running.app.close(); apps.pop(); rmSync(dir, { recursive: true });
+});
 afterEach(async () => { vi.restoreAllMocks(); await Promise.all(apps.splice(0).map(app => app.close())); });
 async function client(url: string) {
   const socket = new WebSocket(url), messages: ServerMessage[] = [];

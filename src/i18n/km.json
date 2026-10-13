@@ -597,5 +597,13 @@
   "solo.opponentFinalScore": "អ្នកឈ្នះមុន {target} ដង · {name} {player} — {opponent} {rival}",
   "Choose your matchup": "ជ្រើសរើសគូប្រកួត",
   "Balances moves using ammo.": "ជ្រើសរើសចលនាតាមគ្រាប់។",
-  "Adapts to your recent moves.": "សម្របតាមចលនាមុនរបស់អ្នក។"
+  "Adapts to your recent moves.": "សម្របតាមចលនាមុនរបស់អ្នក។",
+  "Multiplayer is not configured. Set VITE_MULTIPLAYER_URL and redeploy the frontend.": "មុខងារលេងច្រើននាក់មិនទាន់បានកំណត់។ សូមកំណត់ VITE_MULTIPLAYER_URL ហើយដាក់កម្មវិធីឡើងវិញ។",
+  "The multiplayer server URL is invalid. Use a secure wss:// endpoint.": "អាសយដ្ឋានម៉ាស៊ីនមេមិនត្រឹមត្រូវ។ សូមប្រើអាសយដ្ឋាន wss:// ដែលមានសុវត្ថិភាព។",
+  "Cannot reach the room server. Reconnecting automatically…": "មិនអាចភ្ជាប់ទៅម៉ាស៊ីនមេបន្ទប់បាន។ កំពុងភ្ជាប់ឡើងវិញដោយស្វ័យប្រវត្តិ…",
+  "The room server sent an invalid response.": "ម៉ាស៊ីនមេបន្ទប់បានផ្ញើចម្លើយមិនត្រឹមត្រូវ។",
+  "Room storage unavailable. Reconnect after the server recovers.": "មិនអាចរក្សាទុកបន្ទប់បាន។ សូមភ្ជាប់ឡើងវិញនៅពេលម៉ាស៊ីនមេដំណើរការវិញ។",
+  "Invalid room snapshot.": "ទិន្នន័យបន្ទប់ដែលរក្សាទុកមិនត្រឹមត្រូវ។",
+  "Disconnected from room server.": "បានផ្តាច់ការភ្ជាប់ពីម៉ាស៊ីនមេបន្ទប់។",
+  "Choose one room storage backend.": "សូមជ្រើសរើសប្រព័ន្ធរក្សាទុកបន្ទប់តែមួយ។"
 }

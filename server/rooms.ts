@@ -21,6 +21,23 @@ export class RoomManager {
   connections = new Map<string, { code: string; playerId: string }>();
   private now: () => number;
   constructor(private hooks: Hooks = {}) { this.now = hooks.now ?? Date.now; }
+  snapshot(): string {
+    return JSON.stringify({ version: 1, rooms: [...this.rooms.values()].map(room => ({ ...room, members: [...room.members], locks: [...room.locks] })) });
+  }
+  restore(payload: string) {
+    const saved = JSON.parse(payload) as { version: number; rooms: (Omit<Room, 'members' | 'locks'> & { members: [string, Member][]; locks: [string, LockedAction][] })[] };
+    if (saved.version !== 1 || !Array.isArray(saved.rooms)) throw new Error('Invalid room snapshot.');
+    this.connections.clear(); this.rooms.clear();
+    for (const entry of saved.rooms) {
+      const room: Room = { ...entry, members: new Map(entry.members), locks: new Map(entry.locks) };
+      for (const member of room.members.values()) if (!member.botDifficulty && !member.left) {
+        // Socket IDs never survive a process restart. Retain identities and hidden locks.
+        if (member.connected) member.reconnectUntil = this.now() + ROOM_LIMITS.reconnectMs;
+        member.connected = false; member.connectionId = null;
+      }
+      this.rooms.set(room.code, room);
+    }
+  }
   private announce(room: Room, activity = true) {
     if (activity) room.lastActivity = this.now();
     this.hooks.changed?.(room.code);

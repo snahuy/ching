@@ -70,7 +70,7 @@ Reloading the tab reconnects with the same player and locked action. Reconnect c
 - `server/http.ts`: HTTP assets and viewer-specific WebSocket snapshots; hidden choices and reconnect credentials are never broadcast to other players.
 - `src/multiplayer/Multiplayer.tsx`: lobby, QR invites, targets, synchronized character reveals, attack paths, spectators, history, and results.
 
-For production, run `npm run build` followed by `npm start`. `PORT` changes the default port 3001. Internet invites require hosting this Node process at a reachable URL; static hosting alone cannot synchronize rooms. An HTTPS reverse proxy must forward WebSocket upgrades for `/socket` and preserve the public Host header. `ALLOWED_ORIGINS` accepts comma-separated additional trusted origins when needed. Use a single server instance: rooms are held in memory and reset when the server restarts. On a local network, open the computer’s LAN address before copying invites so the link and QR point to that address. `npm run preview` only serves static files; use `npm start` to test production multiplayer.
+For Vercel production multiplayer, deploy the authoritative backend with its hosted PostgreSQL database and configure `VITE_MULTIPLAYER_URL`. See [MULTIPLAYER_DEPLOYMENT.md](MULTIPLAYER_DEPLOYMENT.md) for exact setup, recovery behavior, and verification. Local `npm run dev` still uses the Vite `/socket` proxy; static preview alone cannot host multiplayer.
 
 
 ## Timers, bots, and match targets
